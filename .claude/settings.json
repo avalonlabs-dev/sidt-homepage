@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import pypdf; print\\('pypdf ok'\\)\")",
+      "Bash(python3 -c \"import fitz; print\\('fitz ok'\\)\")",
+      "Bash(python3 -c ' *)",
+      "Bash(git --no-pager diff --stat)",
+      "Bash(git --no-pager diff --numstat)"
+    ]
+  }
+}

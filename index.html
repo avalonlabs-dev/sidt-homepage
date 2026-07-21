@@ -202,6 +202,194 @@
             line-height: 1.5;
             margin: 0;
         }
+
+        /* ============ CRO: sello Turnitin junto a los CTA ============ */
+        .turnitin-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 7px 14px;
+            border: 1px solid rgba(11, 114, 133, 0.35);
+            border-radius: 999px;
+            background: #fff;
+            color: #27005C;
+            font-size: 0.82rem;
+            line-height: 1.2;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        }
+
+        .turnitin-badge strong {
+            font-weight: 700;
+        }
+
+        /* ============ CRO: formulario reducido en celulares ============ */
+        /* Los campos secundarios se ocultan por CSS y el script les quita `required`
+           (un campo required oculto bloquearía el envío de forma silenciosa). */
+        @media (max-width: 767.98px) {
+            .form-row-optional-mobile {
+                display: none !important;
+            }
+        }
+
+        /* ============ CRO: widget de chat (solo escritorio) ============ */
+        .sidt-chat-widget {
+            position: fixed;
+            right: 20px;
+            bottom: 96px;
+            width: 320px;
+            max-width: calc(100vw - 40px);
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+            z-index: 1001;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(16px);
+            pointer-events: none;
+            transition: opacity .35s ease, transform .35s ease;
+        }
+
+        .sidt-chat-widget.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+
+        .sidt-chat-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: #27005C;
+            color: #fff;
+        }
+
+        .sidt-chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #FFC500;
+            flex-shrink: 0;
+        }
+
+        .sidt-chat-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .sidt-chat-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.72rem;
+            opacity: .9;
+        }
+
+        .sidt-chat-status::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #25D366;
+        }
+
+        .sidt-chat-close {
+            margin-left: auto;
+            background: transparent;
+            border: 0;
+            color: #fff;
+            font-size: 1.2rem;
+            line-height: 1;
+            cursor: pointer;
+            padding: 4px 6px;
+            opacity: .8;
+        }
+
+        .sidt-chat-close:hover {
+            opacity: 1;
+        }
+
+        .sidt-chat-body {
+            padding: 14px;
+        }
+
+        .sidt-chat-bubble {
+            background: #F1F0F5;
+            border-radius: 4px 14px 14px 14px;
+            padding: 11px 13px;
+            font-size: 0.86rem;
+            color: #2b2b2b;
+            line-height: 1.45;
+        }
+
+        .sidt-chat-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 12px;
+            padding: 11px 14px;
+            border: 0;
+            border-radius: 10px;
+            background: #25D366;
+            color: #fff;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: filter .2s ease;
+        }
+
+        .sidt-chat-cta:hover {
+            filter: brightness(1.07);
+        }
+
+        /* En celulares solo se mantiene el botón flotante verde con pulso. */
+        @media (max-width: 767.98px) {
+            .sidt-chat-widget {
+                display: none !important;
+            }
+        }
+
+        /* ============ CRO: prueba social real (reels + capturas de WhatsApp) ============
+           Estilos listos; el markup correspondiente está comentado más abajo,
+           a la espera de los videos y capturas reales. */
+        .prueba-social {
+            padding: 40px 0;
+        }
+
+        .reels-grid,
+        .wa-proof-grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .reels-grid video {
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            object-fit: cover;
+            border-radius: 14px;
+            background: #000;
+        }
+
+        .wa-proof-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        @media (max-width: 767.98px) {
+
+            .reels-grid,
+            .wa-proof-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -558,6 +746,16 @@
                             </span>
                             Contactar por WhatsApp
                         </button>
+                        <!-- Sello de confianza Turnitin (junto al CTA) -->
+                        <div class="turnitin-badge" role="img"
+                            aria-label="Tesis 100% original con garantía Turnitin">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 2 4 5.5v6c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-6L12 2Z" fill="#0B7285" />
+                                <path d="m8.6 12.2 2.3 2.3 4.6-4.6" stroke="#fff" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                            <span><strong>Tesis 100% Original</strong> · Con garantía Turnitin</span>
+                        </div>
                     </div>
                     <!-- Columna 2: Formulario -->
                     <div class="col-lg-4 col-md-12 mb-4 d-flex align-items-center justify-content-center">
@@ -590,7 +788,7 @@
                                             <label for="name">Nombre completo</label>
                                         </div>
                                     </div>
-                                    <div class="form-row">
+                                    <div class="form-row form-row-optional-mobile">
                                         <div class="input-data">
                                             <input type="email" name="email" id="email" required>
                                             <label for="email">Correo electrónico</label>
@@ -629,6 +827,12 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
+                                        <div class="input-data">
+                                            <input type="text" name="career" id="career" required>
+                                            <label for="career">Carrera / Universidad</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-row form-row-optional-mobile">
                                         <div class="input-data textarea">
                                             <textarea name="message" id="message" required></textarea>
                                             <label for="message">Mensaje (cuéntanos sobre tu proyecto)</label>
@@ -642,6 +846,8 @@
                                             </div>
                                             <input type="hidden" name="_captcha" value="false">
                                             <input type="hidden" name="_next" value="https://lsec.asesoriasidt.com/gracias.html">
+                                            <!-- Honeypot anti-spam: invisible para humanos, los bots lo rellenan y FormSubmit descarta el envío -->
+                                            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
                                         </div>
                                     </div>
                                 </form>
@@ -791,7 +997,53 @@
             </div>
         </div>
     </section>
-    
+
+    <!--
+    ============================================================================
+    CRO punto 4 — PRUEBA SOCIAL REAL (pendiente de material de SIDT)
+    Los estilos ya están en el <head>. Para publicar esta sección:
+      1. Subir los archivos a src/videos/ y src/images/ con estos nombres
+         (o cambiar las rutas de abajo):
+           - src/videos/asesor-intro.mp4      video vertical de 45s del asesor
+           - src/videos/testimonio-01.mp4     egresados mostrando su título
+           - src/videos/testimonio-02.mp4
+           - src/images/wa-testimonio-01.webp capturas reales de chats,
+           - src/images/wa-testimonio-02.webp con nombres y fotos difuminados
+           - src/images/wa-testimonio-03.webp
+      2. Quitar este comentario de apertura y el de cierre.
+      3. Reemplazar también las fotos de stock del equipo por fotos reales
+         en la sección "Nosotros".
+    ============================================================================
+
+    <section class="prueba-social">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 text-center mb-4">
+                    <h2 class="feature-title"><span>Egresados reales</span></h2>
+                    <p class="feature-title-text">Testimonios en video de estudiantes que ya sustentaron con SIDT.</p>
+                </div>
+            </div>
+            <div class="reels-grid">
+                <video src="./src/videos/asesor-intro.mp4" controls playsinline preload="metadata"></video>
+                <video src="./src/videos/testimonio-01.mp4" controls playsinline preload="metadata"></video>
+                <video src="./src/videos/testimonio-02.mp4" controls playsinline preload="metadata"></video>
+            </div>
+
+            <div class="row justify-content-center mt-5">
+                <div class="col-12 text-center mb-4">
+                    <h2 class="feature-title"><span>Lo que nos escriben</span></h2>
+                    <p class="feature-title-text">Conversaciones reales de WhatsApp (datos personales difuminados por privacidad).</p>
+                </div>
+            </div>
+            <div class="wa-proof-grid">
+                <img src="./src/images/wa-testimonio-01.webp" alt="Captura de WhatsApp de un egresado agradeciendo a SIDT" loading="lazy">
+                <img src="./src/images/wa-testimonio-02.webp" alt="Captura de WhatsApp de un egresado agradeciendo a SIDT" loading="lazy">
+                <img src="./src/images/wa-testimonio-03.webp" alt="Captura de WhatsApp de un egresado agradeciendo a SIDT" loading="lazy">
+            </div>
+        </div>
+    </section>
+    -->
+
     <section class="custom-about" id="we-about">
         <div class="ellipse" style="z-index: 0;">
             <img src="https://lsec.asesoriasidt.com/src/images/ellipse01.webp" alt="">
@@ -823,7 +1075,7 @@
                                     <label for="name">Nombre completo</label>
                                 </div>
                             </div>
-                            <div class="form-row form-row-about">
+                            <div class="form-row form-row-about form-row-optional-mobile">
                                 <div class="input-data">
                                     <input type="email" name="email" id="email-about" required>
                                     <label for="email">Correo electrónico</label>
@@ -862,6 +1114,12 @@
                                 </div>
                             </div>
                             <div class="form-row form-row-about">
+                                <div class="input-data">
+                                    <input type="text" name="career" id="career-about" required>
+                                    <label for="career">Carrera / Universidad</label>
+                                </div>
+                            </div>
+                            <div class="form-row form-row-about form-row-optional-mobile">
                                 <div class="input-data textarea">
                                     <textarea name="message" id="message-about" required></textarea>
                                     <label for="message">Mensaje (cuéntanos sobre tu proyecto)</label>
@@ -875,6 +1133,8 @@
                                     </div>
                                     <input type="hidden" name="_captcha" value="false">
                                     <input type="hidden" name="_next" value="https://lsec.asesoriasidt.com/gracias.html">
+                                    <!-- Honeypot anti-spam: invisible para humanos, los bots lo rellenan y FormSubmit descarta el envío -->
+                                    <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
                                 </div>
                             </div>
                         </form>
@@ -890,9 +1150,18 @@
                         </span>
                         Contactar por WhatsApp
                     </button>
+                    <!-- Sello de confianza Turnitin (junto al CTA) -->
+                    <div class="turnitin-badge" role="img" aria-label="Tesis 100% original con garantía Turnitin">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 2 4 5.5v6c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-6L12 2Z" fill="#0B7285" />
+                            <path d="m8.6 12.2 2.3 2.3 4.6-4.6" stroke="#fff" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        <span><strong>Tesis 100% Original</strong> · Con garantía Turnitin</span>
+                    </div>
                 </div>
             </div>
-            
+
             <!-- 1. Pasos después de contratar -->
             <div class="row mt-5 pasos-después-contratar">
                 <div class="col-12 text-center mb-3">
@@ -1261,6 +1530,33 @@
             </svg>
     </a>
 
+    <!-- Widget de chat (solo escritorio). La foto y el nombre son PLACEHOLDER:
+         reemplazar avatar01.png por la foto real de la asesora y ajustar el nombre. -->
+    <div class="sidt-chat-widget" id="sidtChatWidget" aria-live="polite">
+        <div class="sidt-chat-header">
+            <img class="sidt-chat-avatar" src="https://lsec.asesoriasidt.com/src/images/avatar01.png"
+                alt="Asesora de SIDT">
+            <div>
+                <div class="sidt-chat-name">Ana · Asesora SIDT</div>
+                <div class="sidt-chat-status">En línea ahora</div>
+            </div>
+            <button type="button" class="sidt-chat-close" id="sidtChatClose" aria-label="Cerrar chat">&times;</button>
+        </div>
+        <div class="sidt-chat-body">
+            <div class="sidt-chat-bubble">
+                Hola, soy Ana de SIDT 👋 ¿En qué carrera haces tu tesis para la promo 2x1?
+            </div>
+            <button type="button" class="sidt-chat-cta" id="sidtChatCta">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+                    aria-hidden="true">
+                    <path
+                        d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592" />
+                </svg>
+                Responder a Ana
+            </button>
+        </div>
+    </div>
+
     <script src="https://lsec.asesoriasidt.com/js/VideoControl.js"></script>
     <script src="https://lsec.asesoriasidt.com/js/form-services.js"></script>
     <script src="https://lsec.asesoriasidt.com/js/whatsapp-handler.js"></script>
@@ -1341,16 +1637,115 @@
         // Enlace de WhatsApp centralizado (número + mensaje)
         var WHATSAPP_LINK = 'https://wa.me/593963875608?text=%20%C2%A1Hola!%20Gracias%20por%20contactarnos%20a%20trav%C3%A9s%20de%20Google.%20%F0%9F%98%8A%20%C2%BFQu%C3%A9%20tipo%20de%20trabajo%20deseas%20obtener%20m%C3%A1s%20informaci%C3%B3n%20y%20de%20qu%C3%A9%20carrera%20o%20especialidad%20es%3F';
 
+        // En escritorio abrimos WhatsApp Web en una pestaña nueva para no perder la landing;
+        // en móvil redirigimos en la misma pestaña (el deep link abre la app y evita dejar una pestaña en blanco).
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod|Opera Mini|IEMobile|Windows Phone|BlackBerry/i.test(navigator.userAgent);
+        }
+
         function gtag_report_conversion() {
+            if (!isMobileDevice()) {
+                // Se abre de forma síncrona dentro del clic para que el bloqueador de pop-ups no lo cancele.
+                window.open(WHATSAPP_LINK, '_blank', 'noopener');
+                gtag('event', 'conversion', { 'send_to': 'AW-17358320939' });
+                return false;
+            }
+
+            var redirected = false;
             var callback = function () {
+                if (redirected) return;
+                redirected = true;
                 window.location = WHATSAPP_LINK;
             };
             gtag('event', 'conversion', {
                 'send_to': 'AW-17358320939',
                 'event_callback': callback
             });
+            // Respaldo por si el callback de conversión nunca llega (adblock, red lenta).
+            setTimeout(callback, 1200);
             return false;
         }
+
+        // ===== CRO: formulario reducido en celulares =====
+        // En <768px se muestran solo Nombre, WhatsApp y Carrera/Universidad.
+        // Hay que quitar `required` de los campos ocultos: si no, el navegador
+        // bloquea el envío intentando enfocar un campo invisible y el usuario no ve el error.
+        (function () {
+            var mobileQuery = window.matchMedia('(max-width: 767.98px)');
+
+            function applyMobileFormFields() {
+                var isMobile = mobileQuery.matches;
+                var rows = document.querySelectorAll('.form-row-optional-mobile');
+
+                Array.prototype.forEach.call(rows, function (row) {
+                    var fields = row.querySelectorAll('input, select, textarea');
+                    Array.prototype.forEach.call(fields, function (field) {
+                        if (isMobile) {
+                            if (field.hasAttribute('required')) {
+                                field.setAttribute('data-was-required', 'true');
+                                field.removeAttribute('required');
+                            }
+                            field.classList.remove('is-invalid', 'is-valid');
+                        } else if (field.getAttribute('data-was-required') === 'true') {
+                            field.setAttribute('required', 'required');
+                        }
+                    });
+                });
+            }
+
+            document.addEventListener('DOMContentLoaded', applyMobileFormFields);
+            if (mobileQuery.addEventListener) {
+                mobileQuery.addEventListener('change', applyMobileFormFields);
+            } else if (mobileQuery.addListener) {
+                mobileQuery.addListener(applyMobileFormFields);
+            }
+        })();
+
+        // ===== CRO: widget de chat en escritorio =====
+        (function () {
+            var WIDGET_DELAY_MS = 8000;
+            var STORAGE_KEY = 'sidtChatClosed';
+            // Mensaje propio del widget: identifica el lead como venido del chat de escritorio.
+            var WIDGET_LINK = 'https://wa.me/593963875608?text=' +
+                encodeURIComponent('¡Hola Ana! Vi la promo 2x1 en la web de SIDT y quiero información para mi tesis.');
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var widget = document.getElementById('sidtChatWidget');
+                var closeBtn = document.getElementById('sidtChatClose');
+                var cta = document.getElementById('sidtChatCta');
+                if (!widget || !closeBtn || !cta) return;
+
+                // En celulares se mantiene solo el botón flotante verde.
+                if (window.matchMedia('(max-width: 767.98px)').matches) return;
+
+                var dismissed = false;
+                try {
+                    dismissed = sessionStorage.getItem(STORAGE_KEY) === '1';
+                } catch (e) { /* sessionStorage bloqueado: se muestra igual */ }
+
+                if (!dismissed) {
+                    setTimeout(function () {
+                        widget.classList.add('is-visible');
+                    }, WIDGET_DELAY_MS);
+                }
+
+                closeBtn.addEventListener('click', function () {
+                    widget.classList.remove('is-visible');
+                    try {
+                        sessionStorage.setItem(STORAGE_KEY, '1');
+                    } catch (e) { /* sin persistencia, reaparece en la próxima carga */ }
+                });
+
+                cta.addEventListener('click', function () {
+                    // Apertura síncrona dentro del clic para evitar el bloqueador de pop-ups.
+                    window.open(WIDGET_LINK, '_blank', 'noopener');
+                    widget.classList.remove('is-visible');
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'conversion', { 'send_to': 'AW-17358320939' });
+                    }
+                });
+            });
+        })();
     </script>
 
 </body>

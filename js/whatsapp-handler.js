@@ -13,8 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
     whatsappButton.addEventListener("click", handleWhatsAppClick);
   }
 
-  // También para los botones de WhatsApp en slogan/about
-  const sloganWhatsappBtns = document.querySelectorAll(".btn-whatsapp-slogan");
+  // También para los botones de WhatsApp en slogan/about.
+  // Se omiten los que ya traen onclick propio (index.html usa gtag_report_conversion,
+  // que abre WhatsApp y registra la conversión); si no, se abriría dos veces.
+  const sloganWhatsappBtns = document.querySelectorAll(
+    ".btn-whatsapp-slogan:not([onclick])"
+  );
   sloganWhatsappBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
       e.preventDefault();

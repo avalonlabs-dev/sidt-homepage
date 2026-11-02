@@ -33,6 +33,23 @@ El navegador pide direcciones, WhatsApp y testimonios a `/public/landing/<pais>`
 
 > **Antes de cancelar el hosting hay que mover la zona DNS completa** a su nuevo proveedor, con **MX, SPF (TXT), DKIM y autodiscover/autoconfig**, además de los registros del portal y la API. Si no, caen el correo, el portal y la API. Cambiar `ls` y `lsec` no depende de esto.
 
+## Forma rápida: `./deploy.sh`
+
+Requisitos en el servidor: Node 22, nginx, certbot y el repo clonado. Después:
+
+```bash
+cd ~/sidt-homepage
+./deploy.sh
+```
+
+Publica el build, configura nginx y pide los certificados según el DNS. Se puede repetir.
+
+- `asesoriasidt.com` y `www` deben apuntar al servidor, o el script se detiene.
+- `lsec` y `ls` se activan solos cuando su DNS apunte aquí. Mientras tanto se omiten y siguen en el hosting.
+- `./deploy.sh --rollback` vuelve a la publicación anterior.
+
+Los pasos 1 a 5 son lo mismo, a mano.
+
 ## 1. Preparar el servidor (una sola vez)
 
 ```bash
@@ -40,7 +57,7 @@ node -v        # 22 o superior; si no, instálalo antes (el script lo comprueba)
 git clone <URL-del-repo> ~/sidt-homepage && cd ~/sidt-homepage && git checkout main   # la rama que publiques
 
 sudo mkdir -p /var/www/sidt-landing/releases /var/www/sidt-landing/acme
-sudo chown -R "$USER": /var/www/sidt-landing/releases   # el script escribe aquí sin sudo
+sudo chown -R "$USER": /var/www/sidt-landing           # el script escribe aquí sin sudo
 sudo mkdir -p /var/cache/nginx/landing
 sudo apt install -y certbot                              # si no está
 ```

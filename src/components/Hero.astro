@@ -1,0 +1,67 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import Icono from './Icono.astro';
+import Sello from './Sello.astro';
+import Forma from './Forma.astro';
+import Formulario from './Formulario.astro';
+import Topografia from './Topografia.astro';
+import { config, whatsappHref } from '../config';
+import { foto } from '../config/media';
+import { cifras } from '../data/contenido';
+const href = whatsappHref(config.whatsapp.numero, config.whatsapp.mensaje);
+const persona = foto('estudiante');
+const graduados = cifras.find((c) => c.etiqueta === 'Graduados');
+---
+<section class="hero" id="inicio">
+  <div class="fondo">
+    <Topografia class="topo--tinta" />
+    <Forma tipo="marca-agua-logo" class="hero-agua" velocidad={0.25} eager />
+    <Forma tipo="destello-violeta" class="hero-destello-a" velocidad={-0.3} anima="gira" eager />
+    <Forma tipo="destello-violeta" class="hero-destello-b" velocidad={0.2} anima="gira gira--inversa" eager />
+    <Forma tipo="destello-violeta" class="hero-destello-c" velocidad={-0.15} anima="gira" eager />
+  </div>
+  <div class="contenedor hero-rejilla">
+    <div class="hero-texto">
+      <h1 class="hero-titulo hero-entra">
+        <span class="linea"><span class="linea-int">Estás a <b>un paso</b></span></span>{' '}
+        <span class="linea"><span class="linea-int">de dejar de</span></span>{' '}
+        <span class="linea"><span class="linea-int">sentirte <b>solo</b></span></span>{' '}
+        <span class="linea"><span class="linea-int">frente a la <b><i>TESIS</i></b>.</span></span>
+      </h1>
+      <p class="hero-bajada hero-entra">En SIDT te brindamos asesoría metodológica, corrección de estilo y guía experta para tu proyecto.</p>
+      <div class="hero-acciones hero-entra">
+        <a class="btn-wa" data-wa href={href} target="_blank" rel="noopener">
+          <IconoWhatsapp />Contactar por WhatsApp
+        </a>
+        <Sello />
+      </div>
+    </div>
+
+    <div class="hero-form">
+      <div class="hero-mancha hero-entra" aria-hidden="true">
+        <Forma tipo="mancha-amarilla-clara" class="mancha-capa mancha-capa--clara" anima="respira respira--lenta" eager />
+        <Forma tipo="mancha-amarilla" class="mancha-capa" anima="respira" eager />
+      </div>
+      <div class="hero-entra"><Formulario compacto /></div>
+    </div>
+
+    <div class="hero-figura">
+      <div class="hero-marco">
+        <div class="hero-disco hero-entra" aria-hidden="true"><Topografia /></div>
+        {persona && (
+          <img class="hero-persona hero-entra" src={persona.src} width={persona.width} height={persona.height} alt={persona.alt} fetchpriority="high" decoding="async" />
+        )}
+      </div>
+      <div class="etiqueta etiqueta--a hero-entra">
+        <span class="etiqueta-icono"><Icono nombre="seal-check" /></span>
+        <span><strong>Tesis 100%</strong> Original</span>
+      </div>
+      {graduados && (
+        <div class="etiqueta etiqueta--b hero-entra">
+          <span class="etiqueta-icono"><Icono nombre="graduation-cap" /></span>
+          <span><strong>{graduados.valor}</strong> {graduados.etiqueta}</span>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

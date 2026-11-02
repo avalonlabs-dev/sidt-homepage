@@ -1,0 +1,13 @@
+---
+import Marca from './Marca.astro';
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { config, whatsappHref } from '../config';
+---
+<header class="cabecera">
+  <div class="contenedor cabecera-fila">
+    <Marca />
+    <a class="btn-wa btn-wa--chico" data-wa href={whatsappHref(config.whatsapp.numero, config.whatsapp.mensaje)} target="_blank" rel="noopener">
+      <IconoWhatsapp /><span>WhatsApp</span>
+    </a>
+  </div>
+</header>

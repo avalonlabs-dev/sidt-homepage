@@ -1,0 +1,40 @@
+---
+import Forma from './Forma.astro';
+import Icono from './Icono.astro';
+import Topografia from './Topografia.astro';
+import { pasos } from '../data/contenido';
+const iconos = ['file-text', 'headset', 'signature', 'calendar-check', 'certificate'];
+---
+<section class="pasos" id="pasos">
+  <div class="fondo">
+    <Topografia class="topo--tinta" />
+    <Forma tipo="destello-violeta" class="pasos-destello" velocidad={-0.3} anima="gira" />
+    <Forma tipo="mancha-amarilla-clara" class="pasos-mancha" velocidad={0.2} anima="respira respira--lenta" />
+  </div>
+  <div class="contenedor">
+    <div class="encabezado" data-revela>
+      <h2 class="titulo-seccion">Pasos <b>después de contratar</b></h2>
+      <p class="bajada">Tu ruta desde la cotización hasta la entrega final</p>
+    </div>
+    <div class="ruta">
+      <!-- Línea sinuosa en escritorio y recta en móvil; se dibujan con el scroll. -->
+      <svg class="ruta-linea" viewBox="0 0 1000 160" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path class="ruta-base" d="M0 80C40 80 60 40 100 40C180 40 220 120 300 120C380 120 420 40 500 40C580 40 620 120 700 120C780 120 820 40 900 40C950 40 960 80 1000 80" />
+        <path class="ruta-avance" pathLength="1" d="M0 80C40 80 60 40 100 40C180 40 220 120 300 120C380 120 420 40 500 40C580 40 620 120 700 120C780 120 820 40 900 40C950 40 960 80 1000 80" />
+      </svg>
+      <span class="ruta-vertical" aria-hidden="true"><span class="ruta-vertical-avance"></span></span>
+      <ol class="ruta-lista">
+        {pasos.map((p, i) => (
+          <li class:list={['paso', i % 2 ? 'paso--abajo' : 'paso--arriba']}>
+            <span class="paso-nodo">{String(i + 1).padStart(2, '0')}</span>
+            <div class="paso-tarjeta">
+              <span class="paso-icono"><Icono nombre={iconos[i]} /></span>
+              <h3>{p.titulo}</h3>
+              <p>{p.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

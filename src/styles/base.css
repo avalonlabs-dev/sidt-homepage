@@ -1,0 +1,63 @@
+@import './tokens.css';
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--blanco);
+  color: var(--grafito);
+  font-family: var(--f);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+h1, h2, h3, h4 { font-weight: 300; color: var(--tinta); margin: 0; text-wrap: balance; }
+h1 b, h2 b { font-weight: 800; }
+h3 { font-weight: 600; }
+p { margin: 0; }
+a { color: var(--anil); text-underline-offset: 0.18em; }
+ol, ul { margin: 0; padding: 0; list-style: none; }
+
+:focus-visible { outline: 3px solid var(--anil); outline-offset: 3px; border-radius: 4px; }
+.testimonios :focus-visible, .franja :focus-visible, .pie :focus-visible, .beneficio :focus-visible { outline-color: var(--amarillo); }
+
+.contenedor { width: min(100% - 2 * var(--gutter), var(--ancho)); margin-inline: auto; }
+[hidden] { display: none !important; }
+
+.titulo-seccion { font-size: var(--t-h2); line-height: 1.18; letter-spacing: -0.01em; }
+.bajada { color: var(--grafito-suave); max-width: var(--lectura); margin-top: 0.6rem; }
+.encabezado { text-align: center; }
+.encabezado .bajada { margin-inline: auto; }
+
+/* Botón de WhatsApp (único uso del verde) */
+.btn-wa {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+  background: var(--whatsapp); color: var(--whatsapp-texto);
+  font: 600 1rem/1.2 var(--f);
+  padding: 0.9rem 1.5rem; border-radius: 999px; border: 0; cursor: pointer;
+  text-decoration: none; min-height: 3rem;
+  box-shadow: 0 12px 24px -12px rgb(6 51 26 / 0.7);
+  transition: background-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.btn-wa:hover { background: var(--whatsapp-hover); transform: translateY(-2px); box-shadow: 0 16px 28px -12px rgb(6 51 26 / 0.8); }
+.btn-wa:active { transform: translateY(0); }
+.btn-wa svg { width: 1.35rem; height: 1.35rem; flex: none; }
+.btn-wa--chico { padding: 0.5rem 1.05rem; min-height: 2.6rem; font-size: 0.9rem; }
+.btn-wa--chico svg { width: 1.1rem; height: 1.1rem; }
+
+.btn-enviar {
+  width: 100%; background: var(--grad-boton); color: var(--blanco); font: 600 1rem/1.2 var(--f);
+  letter-spacing: 0.04em; border: 0; border-radius: 999px; padding: 0.85rem 1.5rem; min-height: 3rem; cursor: pointer;
+  box-shadow: 0 14px 24px -14px var(--tinta); transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-enviar:hover { transform: translateY(-2px); box-shadow: 0 18px 28px -14px var(--tinta); }
+
+.icono { width: 1em; height: 1em; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

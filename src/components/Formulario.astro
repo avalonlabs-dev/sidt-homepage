@@ -1,0 +1,56 @@
+---
+import { config, FORMSUBMIT, PAISES_FORMULARIO } from '../config';
+
+interface Props { sufijo?: string; compacto?: boolean }
+const { sufijo = '', compacto = false } = Astro.props;
+const id = (n: string) => `${n}${sufijo}`;
+const sel = config.paisSeleccionado;
+// País por defecto primero y marcado; el resto de la lista sin repetirlo.
+const otros = PAISES_FORMULARIO.filter((p) => !(p.codigo === sel.codigo && p.etiqueta === sel.etiqueta));
+const bandera = PAISES_FORMULARIO.find((p) => p.etiqueta === sel.etiqueta)?.bandera ?? (sel.etiqueta === 'Perú' ? '🇵🇪' : '');
+const next = `https://${config.dominio}/gracias.html`;
+---
+<form class:list={['formulario', { 'formulario--compacto': compacto }]} action={FORMSUBMIT} method="POST" data-pais={config.pais} data-codigo-defecto={sel.codigo}>
+  <h2 class="formulario-titulo"><b>Cotizaciones</b> y Consultas</h2>
+
+  <div class="campo">
+    <label for={id('name')}>Nombre completo</label>
+    <input type="text" name="name" id={id('name')} autocomplete="name" required />
+  </div>
+
+  <div class="campo form-row-optional-mobile">
+    <label for={id('email')}>Correo electrónico</label>
+    <input type="email" name="email" id={id('email')} autocomplete="email" required />
+  </div>
+
+  <div class="campo-doble">
+    <div class="campo campo-codigo">
+      <label for={id('countryCode')}>País</label>
+      <select name="countryCode" id={id('countryCode')} required>
+        <option value={sel.codigo} selected>{bandera} {sel.codigo} ({sel.etiqueta})</option>
+        {otros.map((p) => <option value={p.codigo}>{p.bandera} {p.codigo} ({p.etiqueta})</option>)}
+      </select>
+    </div>
+    <div class="campo campo-wa">
+      <label for={id('whatsapp')}>WhatsApp</label>
+      <input type="tel" name="whatsapp" id={id('whatsapp')} inputmode="numeric" autocomplete="tel-national" placeholder={config.placeholderWhatsapp} required />
+    </div>
+  </div>
+
+  <div class="campo">
+    <label for={id('career')}>Carrera / Universidad</label>
+    <input type="text" name="career" id={id('career')} required />
+  </div>
+
+  <div class="campo form-row-optional-mobile">
+    <label for={id('message')}>Mensaje (cuéntanos sobre tu proyecto)</label>
+    <textarea name="message" id={id('message')} rows={compacto ? 2 : 3} required></textarea>
+  </div>
+
+  <input type="submit" class="btn-enviar" value="Enviar" />
+
+  <input type="hidden" name="_captcha" value="false" />
+  <input type="hidden" name="_next" value={next} />
+  <!-- Honeypot anti-spam: invisible para personas; FormSubmit descarta el envío si viene relleno -->
+  <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
+</form>

@@ -1,0 +1,33 @@
+---
+import Marca from './Marca.astro';
+import Forma from './Forma.astro';
+import Icono from './Icono.astro';
+import Topografia from './Topografia.astro';
+import { config } from '../config';
+import { disclaimer } from '../data/contenido';
+import { leerRed, REDES } from '../data/redes';
+const redes = config.redes.flatMap((r) => leerRed(r) ?? []);
+---
+<footer class="pie">
+  <div class="fondo">
+    <Topografia />
+    <Forma tipo="destello-violeta" class="forma--clara pie-destello" anima="gira" />
+  </div>
+  <div class="aviso">
+    <p class="contenedor"><strong>Disclaimer Legal:</strong> {disclaimer}</p>
+  </div>
+  <div class="contenedor pie-marca">
+    <Marca variante="pie" />
+    {redes.length > 0 && (
+      <ul class="pie-redes" id="pie-redes" aria-label="Redes sociales">
+        {redes.map((r) => (
+          <li><a href={r.url} target="_blank" rel="noopener noreferrer" aria-label={REDES[r.red].nombre}><Icono nombre={REDES[r.red].icono} /></a></li>
+        ))}
+      </ul>
+    )}
+  </div>
+  <!-- contenido.ts clona estos iconos para las redes que llegan de la API. -->
+  <template id="redes-iconos">
+    {Object.entries(REDES).map(([red, r]) => <span data-red={red}><Icono nombre={r.icono} /></span>)}
+  </template>
+</footer>

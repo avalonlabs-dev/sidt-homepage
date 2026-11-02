@@ -1,0 +1,31 @@
+---
+import Forma from './Forma.astro';
+import Icono from './Icono.astro';
+import Topografia from './Topografia.astro';
+import { testimoniosBuild } from '../config/media';
+const ALT = 'Captura de WhatsApp de un estudiante agradeciendo a SIDT';
+const lista = testimoniosBuild();
+---
+<!-- Si el build no trae capturas, la sección queda oculta hasta que la API las entregue. -->
+<section class="testimonios" id="testimonios" aria-labelledby="testimonios-titulo" hidden={lista.length === 0}>
+  <div class="fondo">
+    <Topografia />
+    <Forma tipo="destello-violeta" class="forma--clara testimonios-destello-a" velocidad={-0.3} anima="gira" />
+    <Forma tipo="destello-violeta" class="forma--clara testimonios-destello-b" velocidad={0.25} anima="gira gira--inversa" />
+  </div>
+  <Forma tipo="circulo-amarillo-medio" class="forma--circulo testimonios-circulo" velocidad={0.35} />
+  <div class="contenedor encabezado" data-revela>
+    <h2 class="titulo-seccion" id="testimonios-titulo">Lo que dicen <b>nuestros estudiantes</b></h2>
+    <p class="bajada">Capturas reales de WhatsApp de quienes ya confiaron en SIDT</p>
+  </div>
+  <div class="carrusel" data-carrusel>
+    <button type="button" class="carrusel-flecha carrusel-flecha--previa" data-previo aria-label="Testimonio anterior"><Icono nombre="caret-left" /></button>
+    <ul class="carrusel-pista" id="testimonios-lista" tabindex="0" aria-label="Capturas de testimonios, desliza para ver más">
+      {lista.map((t) => (
+        <li class="carrusel-item"><img src={t.src} width={t.width ?? 270} height={t.height ?? 480} alt={t.alt || ALT} loading="lazy" decoding="async" /></li>
+      ))}
+    </ul>
+    <button type="button" class="carrusel-flecha carrusel-flecha--siguiente" data-siguiente aria-label="Testimonio siguiente"><Icono nombre="caret-right" /></button>
+    <div class="carrusel-puntos" role="group" aria-label="Elegir testimonio"></div>
+  </div>
+</section>

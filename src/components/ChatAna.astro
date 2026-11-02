@@ -1,0 +1,22 @@
+---
+import { config, whatsappHref } from '../config';
+// Foto de la asesora, la misma de la web publicada; sin ella se muestra la inicial.
+const avatar = { src: '/media/marca/avatar-ana.png' } as { src: string } | null;
+---
+<!-- Widget de "Ana": solo escritorio, aparece a los 8 s, se descarta por sesión. -->
+<aside class="ana" id="sidtChatWidget" aria-live="polite" aria-label="Chat con una asesora" data-link={whatsappHref(config.whatsapp.numero, config.mensajeWidget)} data-mensaje={config.mensajeWidget}>
+  <div class="ana-cabecera">
+    {avatar
+      ? <img class="ana-avatar" src={avatar.src} width="44" height="44" alt="Asesora de SIDT" loading="lazy" decoding="async" />
+      : <span class="ana-avatar ana-avatar--letra" aria-hidden="true">A</span>}
+    <div>
+      <div class="ana-nombre">Ana · Asesora SIDT</div>
+      <div class="ana-estado">En línea ahora</div>
+    </div>
+    <button type="button" class="ana-cerrar" id="sidtChatClose" aria-label="Cerrar chat">&times;</button>
+  </div>
+  <div class="ana-cuerpo">
+    <p class="ana-burbuja">Hola, soy Ana de SIDT 👋 ¿En qué carrera haces tu tesis para la promo 2x1?</p>
+    <button type="button" class="btn-wa btn-wa--chico" id="sidtChatCta">Responder a Ana</button>
+  </div>
+</aside>

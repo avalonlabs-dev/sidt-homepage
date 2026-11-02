@@ -1,0 +1,21 @@
+{
+  "name": "sidt-homepage",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "dev:pe": "PAIS=pe astro dev",
+    "build": "npm run build:ec && npm run build:pe",
+    "build:ec": "PAIS=ec astro build && node scripts/podar-media.mjs ec",
+    "build:pe": "PAIS=pe astro build && node scripts/podar-media.mjs pe",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "^5.3.0",
+    "@phosphor-icons/core": "^2.1.1",
+    "astro": "^7.4.5",
+    "gsap": "^3.15.0"
+  }
+}

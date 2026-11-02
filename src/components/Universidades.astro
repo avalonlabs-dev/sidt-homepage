@@ -1,0 +1,23 @@
+---
+import { config } from '../config';
+import { logoUniversidad } from '../config/media';
+const lista = config.universidades.map((u) => ({ ...u, img: logoUniversidad(u.nombre) }));
+---
+<section class="universidades" aria-label="Universidades de nuestros estudiantes">
+  <!-- Tira infinita: la segunda lista repite la primera para cerrar el bucle. -->
+  <div class="tira-marco" tabindex="0" aria-label="Logos de universidades">
+    <div class="tira">
+      {[false, true].map((copia) => (
+        <ul class="tira-lista" aria-hidden={copia ? 'true' : undefined}>
+          {lista.map((u) => (
+            <li>
+              {u.img
+                ? <img src={u.img.src} width={u.img.width ?? 225} height={u.img.height ?? 86} alt={copia ? '' : `Logo de ${u.nombre}`} loading="lazy" decoding="async" />
+                : <span class="universidad-texto">{u.nombre}</span>}
+            </li>
+          ))}
+        </ul>
+      ))}
+    </div>
+  </div>
+</section>

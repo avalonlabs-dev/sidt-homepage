@@ -1,0 +1,130 @@
+---
+import '@fontsource/poppins/latin-300.css';
+import '@fontsource/poppins/latin-400.css';
+import '@fontsource/poppins/latin-600.css';
+import '@fontsource/poppins/latin-800.css';
+import '@fontsource/poppins/latin-800-italic.css';
+import '../styles/base.css';
+import '../styles/sitio.css';
+import LogoMark from '../components/LogoMark.astro';
+import WhatsappFlotante from '../components/WhatsappFlotante.astro';
+import fuentePrincipal from '@fontsource/poppins/files/poppins-latin-400-normal.woff2?url';
+import { config, PALABRAS_CLAVE, GOOGLE_ADS_ID, GTM_ID, CONVERSION_GRACIAS } from '../config';
+import { OG_IMAGEN, alternativas, grafoPortada, origen } from '../config/seo';
+
+interface Props {
+  titulo?: string;
+  ogTitulo?: string;
+  /** Página de gracias: dispara la conversión "Formulario lleno". */
+  conversion?: boolean;
+  ruta?: string;
+  /** false: la página lleva noindex, no declara hreflang y no entra al sitemap. */
+  indexar?: boolean;
+  /** Incluye el JSON-LD de la portada. */
+  jsonld?: boolean;
+}
+const { titulo = config.titulo, ogTitulo = titulo, conversion = false, ruta = '', indexar = true, jsonld = false } = Astro.props;
+const VERSIONES_OG = ['es_EC', 'es_PE'];
+const canonica = `${origen}/${ruta}`;
+const imagenOg = `${origen}${OG_IMAGEN.ruta}`;
+// "<" escapado: el JSON no puede cerrar el <script>.
+const grafo = jsonld ? JSON.stringify(grafoPortada()).replace(/</g, '\\u003c') : '';
+---
+<!doctype html>
+<html lang={config.idioma}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content="SidTesis" />
+    <meta name="robots" content={indexar ? 'index, follow, max-image-preview:large' : 'noindex, follow'} />
+    <title>{titulo}</title>
+    <meta name="description" content={config.descripcion} />
+    <meta name="keywords" content={PALABRAS_CLAVE} />
+    <meta name="theme-color" content="#27005C" />
+    <link rel="canonical" href={canonica} />
+    {indexar && alternativas.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+    <link rel="icon" href="/favicon.ico?v=3" sizes="16x16 32x32 48x48" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=3" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png?v=3" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=3" />
+    <link rel="manifest" href="/site.webmanifest?v=3" />
+    <link rel="preload" href={fuentePrincipal} as="font" type="font/woff2" crossorigin />
+    <!-- Oculta la entrada del hero hasta que GSAP la toma; si GSAP no llega, se retira sola. -->
+    <script is:inline>
+      (function () {
+        if (!window.matchMedia || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var d = document.documentElement;
+        d.classList.add('pre-anim');
+        setTimeout(function () { d.classList.remove('pre-anim'); }, 1500);
+      })();
+    </script>
+
+    <!-- Open Graph y Twitter Card -->
+    <meta property="og:title" content={ogTitulo} />
+    <meta property="og:description" content={config.descripcion} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SIDT" />
+    <meta property="og:locale" content={config.localeOg} />
+    {VERSIONES_OG.filter((l) => l !== config.localeOg).map((l) => <meta property="og:locale:alternate" content={l} />)}
+    <meta property="og:image" content={imagenOg} />
+    <meta property="og:image:secure_url" content={imagenOg} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content={String(OG_IMAGEN.ancho)} />
+    <meta property="og:image:height" content={String(OG_IMAGEN.alto)} />
+    <meta property="og:image:alt" content={OG_IMAGEN.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={ogTitulo} />
+    <meta name="twitter:description" content={config.descripcion} />
+    <meta name="twitter:image" content={imagenOg} />
+    <meta name="twitter:image:alt" content={OG_IMAGEN.alt} />
+    {grafo && <script type="application/ld+json" set:html={grafo}></script>}
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}></script>
+    <script is:inline set:html={`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GOOGLE_ADS_ID}');`}></script>
+    <!-- Google Tag Manager -->
+    <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_ID}');`}></script>
+    <!-- Google Analytics (gtag.js) desactivado, igual que en producción: G-Z7C0M4QVTV
+         (para activarlo, repetir el bloque de gtag con ese id) -->
+    {conversion && (
+      <Fragment>
+        <!-- Event snippet for Formulario lleno conversion page -->
+        <script is:inline set:html={`gtag('event', 'conversion', {'send_to': '${CONVERSION_GRACIAS}'});`}></script>
+      </Fragment>
+    )}
+  </head>
+  <body
+    data-pais={config.pais}
+    data-wa-numero={config.whatsapp.numero}
+    data-wa-mensaje={config.whatsapp.mensaje}
+    data-ads-id={GOOGLE_ADS_ID}
+  >
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`} height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <LogoMark />
+    <slot />
+    <WhatsappFlotante />
+    <slot name="flotantes" />
+    <script>
+      import '../scripts/whatsapp';
+      import '../scripts/formularios';
+      import '../scripts/chat';
+      import '../scripts/contenido';
+      import '../scripts/carrusel';
+      import '../scripts/servicios';
+      import '../scripts/video';
+      // GSAP va aparte y tras la primera pintura. Si no llega, la página sigue entera y funcional.
+      const cargarMovimiento = () =>
+        import('../scripts/movimiento').catch(() => document.documentElement.classList.remove('pre-anim'));
+      requestAnimationFrame(() => requestAnimationFrame(cargarMovimiento));
+    </script>
+  </body>
+</html>

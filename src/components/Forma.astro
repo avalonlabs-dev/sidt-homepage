@@ -1,0 +1,33 @@
+---
+// Forma decorativa de marca. El contenedor lo mueve GSAP (data-velocidad) y la imagen la anima
+// CSS, para que las dos transformaciones no se pisen. Si la pieza falta, se dibuja en línea.
+import { piezaMarca, type PiezaMarca } from '../config/media';
+
+interface Props {
+  tipo: PiezaMarca;
+  class?: string;
+  /** Parallax: positivo baja con el scroll, negativo sube. */
+  velocidad?: number;
+  /** Clase de la animación continua de la imagen (gira, respira...). */
+  anima?: string;
+  /** Solo las del primer pantallazo van en eager. */
+  eager?: boolean;
+}
+const { tipo, class: clase = '', velocidad, anima = '', eager = false } = Astro.props;
+const pieza = piezaMarca(tipo);
+const esMancha = tipo.startsWith('mancha');
+const esCirculo = tipo.startsWith('circulo');
+---
+<span class={`forma ${clase}`} data-velocidad={velocidad} aria-hidden="true">
+  {pieza
+    ? <img class={anima} src={pieza.src} alt="" width={pieza.width ?? 100} height={pieza.height ?? 100} loading={eager ? 'eager' : 'lazy'} decoding="async" />
+    : (
+      <svg class={anima} viewBox="0 0 100 100" focusable="false">
+        {esCirculo && <circle cx="50" cy="50" r="50" fill="#FFC500" />}
+        {esMancha && <path d="M50 2c14 0 18 12 30 16 13 5 18 18 14 31-3 11 3 20-5 31-9 11-21 8-32 14-12 6-25 5-34-6C13 79 5 72 4 58 3 44 12 37 13 25 14 12 34 2 50 2Z" fill={tipo.endsWith('clara') ? '#FFD776' : '#FFC500'} />}
+        {tipo === 'destello-violeta' && <g stroke="#50169E" stroke-width="7" stroke-linecap="butt">{Array.from({ length: 12 }, (_, i) => <line x1="50" y1="2" x2="50" y2="98" transform={`rotate(${i * 15} 50 50)`} />)}</g>}
+        {tipo === 'marca-agua-logo' && <use href="#sidt-mark" width="100" height="100" />}
+        {tipo === 'figura-violeta-pasos' && <circle cx="0" cy="50" r="50" fill="#341E86" />}
+      </svg>
+    )}
+</span>

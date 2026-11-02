@@ -1,0 +1,20 @@
+---
+import Forma from './Forma.astro';
+import Icono from './Icono.astro';
+import Topografia from './Topografia.astro';
+import { cifras } from '../data/contenido';
+const iconos = ['medal', 'graduation-cap', 'books'];
+---
+<section class="franja" aria-label="SIDT en cifras">
+  <div class="fondo"><Topografia /></div>
+  <Forma tipo="circulo-amarillo-grande" class="forma--circulo franja-circulo-a" velocidad={-0.45} />
+  <Forma tipo="circulo-amarillo-medio" class="forma--circulo franja-circulo-b" velocidad={0.45} />
+  <dl class="contenedor franja-fila">
+    {cifras.map((c, i) => (
+      <div class="cifra">
+        <dt>{c.etiqueta}</dt>
+        <dd><span class="cifra-icono"><Icono nombre={iconos[i]} /></span><span class="cifra-valor" data-contador>{c.valor}</span></dd>
+      </div>
+    ))}
+  </dl>
+</section>

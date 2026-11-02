@@ -1,0 +1,13 @@
+---
+// Líneas topográficas de marca: dos capas que derivan en sentidos opuestos.
+import { piezaMarca } from '../config/media';
+const { class: clase = '' } = Astro.props;
+const pieza = piezaMarca('topografia-lineas');
+const estilo = pieza ? `background-image:url(${pieza.src})` : undefined;
+---
+{pieza && (
+  <span class={`topo ${clase}`} aria-hidden="true">
+    <span class="topo-capa topo-a" style={estilo}></span>
+    <span class="topo-capa topo-b" style={estilo}></span>
+  </span>
+)}

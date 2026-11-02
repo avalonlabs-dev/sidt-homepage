@@ -1,0 +1,66 @@
+---
+import Formulario from './Formulario.astro';
+import Forma from './Forma.astro';
+import Icono from './Icono.astro';
+import Sello from './Sello.astro';
+import Topografia from './Topografia.astro';
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { config, whatsappHref } from '../config';
+import { foto, videoNosotros } from '../config/media';
+import { cifras } from '../data/contenido';
+const href = whatsappHref(config.whatsapp.numero, config.whatsapp.mensaje);
+const persona = foto('nosotros');
+const anios = cifras[0];
+const video = videoNosotros();
+---
+<section class="nosotros" id="we-about">
+  <div class="fondo">
+    <Topografia class="topo--tinta" />
+    <Forma tipo="marca-agua-logo" class="nosotros-agua" velocidad={0.3} />
+    <Forma tipo="destello-violeta" class="nosotros-destello" velocidad={-0.3} anima="gira gira--inversa" />
+  </div>
+  <Forma tipo="circulo-amarillo-medio" class="forma--circulo nosotros-circulo" velocidad={-0.4} />
+  <div class="contenedor nosotros-rejilla">
+    <div class="nosotros-cabeza" data-revela>
+      <h2 class="titulo-seccion"><b>Nosotros</b></h2>
+      <p class="bajada">Somos un equipo experto en tesis y trabajos académicos. Te acompañamos desde el primer día hasta la entrega final.</p>
+    </div>
+    <div class="nosotros-figura">
+      <div class="nosotros-mancha" aria-hidden="true">
+        <Forma tipo="mancha-amarilla" class="mancha-capa" anima="respira respira--lenta" />
+      </div>
+      {persona && (
+        <img class="nosotros-persona" src={persona.src} width={persona.width} height={persona.height} alt={persona.alt} loading="lazy" decoding="async" />
+      )}
+      {video && (
+        <button type="button" class="etiqueta etiqueta--video" data-video-abrir aria-haspopup="dialog" aria-controls="video-dialogo" hidden>
+          <span class="etiqueta-icono"><Icono nombre="play" /></span>
+          <span><strong>Ver video</strong></span>
+        </button>
+      )}
+      <div class="etiqueta etiqueta--c">
+        <span class="etiqueta-icono"><Icono nombre="medal" /></span>
+        <span><strong>{anios.valor}</strong> {anios.etiqueta}</span>
+      </div>
+    </div>
+    <div class="nosotros-form">
+      <Formulario sufijo="-about" compacto />
+      <div class="nosotros-acciones">
+        <a class="btn-wa" data-wa href={href} target="_blank" rel="noopener">
+          <IconoWhatsapp />Contactar por WhatsApp
+        </a>
+        <Sello />
+      </div>
+    </div>
+  </div>
+</section>
+{/* El video no se pide hasta que alguien lo abre: sin src, con preload="none". */}
+{video && (
+  <dialog id="video-dialogo" class="video-dialogo" aria-labelledby="video-titulo" data-src={video.src} data-poster={video.poster}>
+    <div class="video-caja">
+      <h2 id="video-titulo" class="solo-lectores">Video de presentación de SIDT</h2>
+      <button type="button" class="video-cerrar" data-video-cerrar aria-label="Cerrar video"><Icono nombre="x" /></button>
+      <video preload="none" controls playsinline width={video.width} height={video.height} aria-label={video.alt}></video>
+    </div>
+  </dialog>
+)}

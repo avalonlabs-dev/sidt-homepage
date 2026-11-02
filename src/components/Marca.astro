@@ -1,0 +1,12 @@
+---
+import { config } from '../config';
+const { variante = 'cabecera' } = Astro.props;
+---
+<a class:list={['marca', variante]} href="./" aria-label="SIDT, inicio">
+  <span class="marca-sello">
+    <svg class="marca-icono" width="39" height="51" aria-hidden="true"><use href="#sidt-mark" /></svg>
+    <span class="marca-sidt">SIDT</span>
+  </span>
+  <span class="marca-regla" aria-hidden="true"></span>
+  <span class="marca-razon">Servicios Integrales de <b>{config.razonSocial}</b></span>
+</a>

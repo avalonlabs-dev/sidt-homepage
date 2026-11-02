@@ -1,0 +1,76 @@
+---
+import Forma from './Forma.astro';
+import Icono from './Icono.astro';
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import Topografia from './Topografia.astro';
+import { config, whatsappHref } from '../config';
+import { categoriasServicio, detalleServicio, serviceOptions } from '../data/servicios';
+
+const categorias = categoriasServicio.map((c) => {
+  const sufijo = `Quiero cotizar: ${c.nombre}.`;
+  return { ...c, servicios: serviceOptions[c.clave], sufijo, href: whatsappHref(config.whatsapp.numero, `${config.whatsapp.mensaje} ${sufijo}`) };
+});
+---
+<section class="servicios" id="servicios" aria-labelledby="servicios-titulo">
+  <div class="fondo">
+    <Topografia class="topo--tinta" />
+    <Forma tipo="destello-violeta" class="servicios-destello" velocidad={-0.25} anima="gira" />
+    <Forma tipo="mancha-amarilla-clara" class="servicios-mancha" velocidad={0.2} anima="respira respira--lenta" />
+  </div>
+  <Forma tipo="circulo-amarillo-medio" class="forma--circulo servicios-circulo" velocidad={0.3} />
+  <div class="contenedor">
+    <div class="encabezado" data-revela>
+      <h2 class="titulo-seccion" id="servicios-titulo">Nuestros <b>servicios</b></h2>
+      <p class="bajada">Asesoría para cada etapa de tu trabajo académico</p>
+    </div>
+    <!-- Sin JS, selector y línea quedan ocultos y se ven las tres categorías. servicios.ts los activa. -->
+    <div class="serv" data-serv data-revela>
+      <svg class="serv-linea" data-serv-linea aria-hidden="true" focusable="false" hidden>
+        <path class="serv-linea-trazo" pathLength="1" />
+        <circle class="serv-linea-nodo" r="8" />
+        <circle class="serv-linea-nodo" r="8" />
+      </svg>
+      <div class="serv-pestanas" role="tablist" aria-label="Categorías de servicios" hidden>
+        {categorias.map((c, i) => (
+          <button type="button" role="tab" class="serv-tab" id={`serv-tab-${c.clave}`} aria-controls={`serv-panel-${c.clave}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+            <span class="serv-tab-nodo"><Icono nombre={c.icono} /></span>
+            <span class="serv-tab-texto">
+              <span class="serv-tab-nombre">{c.nombre}</span>
+              <span class="serv-tab-pista">{c.pista}</span>
+            </span>
+            <span class="serv-tab-progreso" aria-hidden="true"></span>
+          </button>
+        ))}
+      </div>
+      <div class="serv-marco">
+        <div class="serv-marco-fondo" aria-hidden="true">
+          <Topografia />
+          <Forma tipo="mancha-amarilla" class="serv-mancha" />
+        </div>
+        {categorias.map((c) => (
+          <div class="serv-panel" id={`serv-panel-${c.clave}`} data-serv-panel>
+            <div>
+              <h3>{c.nombre}</h3>
+              <p class="serv-frase">{c.frase}</p>
+            </div>
+            <ul class:list={['serv-fichas', { 'serv-fichas--grandes': c.servicios.length <= 3 }]}>
+              {c.servicios.map((s, i) => (
+                <li class="serv-ficha" style={`--i:${i}`}>
+                  <span class="serv-ficha-icono"><Icono nombre={detalleServicio[s.value].icono} /></span>
+                  <span class="serv-ficha-nombre">{s.label.split('/').map((parte, n) => (n ? <Fragment>/<wbr />{parte}</Fragment> : parte))}</span>
+                  {detalleServicio[s.value].apoyo && <span class="serv-ficha-apoyo">{detalleServicio[s.value].apoyo}</span>}
+                </li>
+              ))}
+            </ul>
+            <div class="serv-cierre">
+              <a class="btn-wa serv-cta" data-wa data-wa-sufijo={c.sufijo} href={c.href} target="_blank" rel="noopener">
+                <IconoWhatsapp />Cotizar {c.nombre} por WhatsApp
+              </a>
+              <p class="serv-nota"><Icono nombre="headset" />Un asesor experto se comunicará contigo.</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

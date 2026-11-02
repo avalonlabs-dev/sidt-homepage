@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Hero from '../components/Hero.astro';
+import Cifras from '../components/Cifras.astro';
+import Universidades from '../components/Universidades.astro';
+import Nosotros from '../components/Nosotros.astro';
+import Testimonios from '../components/Testimonios.astro';
+import Pasos from '../components/Pasos.astro';
+import Beneficios from '../components/Beneficios.astro';
+import Servicios from '../components/Servicios.astro';
+import DondeEstamos from '../components/DondeEstamos.astro';
+import Pie from '../components/Pie.astro';
+import ChatAna from '../components/ChatAna.astro';
+---
+<Base jsonld>
+  <Cabecera />
+  <main class="principal">
+    <Hero />
+    <Cifras />
+    <Universidades />
+    <Nosotros />
+    <Servicios />
+    <Testimonios />
+    <Pasos />
+    <Beneficios />
+    <DondeEstamos />
+  </main>
+  <Pie />
+  <ChatAna slot="flotantes" />
+</Base>

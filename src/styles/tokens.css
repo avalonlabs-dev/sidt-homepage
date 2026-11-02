@@ -1,0 +1,43 @@
+:root {
+  /* Color: ver docs/diseno-landing.md */
+  --tinta: #27005c;
+  --tinta-media: #3a0f85;
+  --anil: #525fe1;
+  --violeta: #7b2fff;
+  --destello: #50169e;
+  --amarillo: #ffc500;
+  --amarillo-claro: #ffd776;
+  --blanco: #ffffff;
+  --lila: #f5f3ff;
+  --lila-medio: #e9e4fb;
+  --grafito: #2e2a3a;
+  --grafito-suave: #5a5568;
+  --filete: #dcd6ef;
+  --whatsapp: #25d366;
+  --whatsapp-hover: #4be083;
+  --whatsapp-texto: #06331a;
+  --error: #b3261e;
+  --sobre-tinta: #e6dffa;
+
+  /* Degradados */
+  --grad-franja: linear-gradient(100deg, var(--anil) 0%, var(--tinta-media) 52%, var(--tinta) 100%);
+  --grad-tarjeta: linear-gradient(150deg, var(--tinta-media) 0%, var(--violeta) 100%);
+  --grad-boton: linear-gradient(95deg, var(--anil) 0%, var(--tinta) 100%);
+
+  /* Tipografía */
+  --f: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --t-base: 1rem;
+  --t-peq: 0.875rem;
+  --t-h2: clamp(1.6rem, 3.1vw, 2.5rem);
+  --t-h1: clamp(1.8rem, 3.05vw, 2.85rem);
+
+  /* Espacio y forma */
+  --ancho: 78rem;
+  --lectura: 40rem;
+  --gutter: clamp(1.1rem, 3.4vw, 2.5rem);
+  --seccion: clamp(3.5rem, 7vw, 6rem);
+  --radio: 0.75rem;
+  --radio-grande: 1.5rem;
+  --sombra: 0 2px 6px rgb(39 0 92 / 0.08), 0 24px 50px -22px rgb(39 0 92 / 0.45);
+  --sombra-suave: 0 10px 28px -14px rgb(39 0 92 / 0.35);
+}

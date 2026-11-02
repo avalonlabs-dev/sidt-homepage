@@ -1,0 +1,11 @@
+---
+// Icono de Phosphor como SVG en línea: al build solo llegan los que se usan.
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props { nombre: string; peso?: 'fill' | 'duotone'; class?: string }
+const { nombre, peso = 'fill', class: clase = '' } = Astro.props;
+const archivo = path.resolve(process.cwd(), `node_modules/@phosphor-icons/core/assets/${peso}/${nombre}-${peso}.svg`);
+const svg = fs.readFileSync(archivo, 'utf8').replace('<svg ', `<svg class="icono ${clase}" aria-hidden="true" focusable="false" `);
+---
+<Fragment set:html={svg} />

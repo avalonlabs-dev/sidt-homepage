@@ -1,0 +1,28 @@
+---
+import Forma from './Forma.astro';
+import Icono from './Icono.astro';
+import { beneficios } from '../data/contenido';
+const iconos = ['chalkboard-teacher', 'compass', 'pen-nib', 'globe-hemisphere-west', 'list-checks', 'users-three'];
+---
+<section class="beneficios" id="beneficios">
+  <div class="fondo">
+    <Forma tipo="figura-violeta-pasos" class="beneficios-figura" velocidad={0.15} />
+    <Forma tipo="destello-violeta" class="beneficios-destello" velocidad={-0.25} anima="gira gira--inversa" />
+  </div>
+  <Forma tipo="circulo-amarillo-medio" class="forma--circulo beneficios-circulo" velocidad={-0.4} />
+  <div class="contenedor">
+    <div class="encabezado" data-revela>
+      <h2 class="titulo-seccion">Beneficios de <b>contratar nuestros servicios</b></h2>
+      <p class="bajada">Todo lo que obtienes al elegirnos</p>
+    </div>
+    <ul class="beneficios-lista">
+      {beneficios.map((b, i) => (
+        <li class="beneficio">
+          <span class="beneficio-icono"><Icono nombre={iconos[i]} /></span>
+          <h3>{b.titulo}</h3>
+          <p>{b.texto}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

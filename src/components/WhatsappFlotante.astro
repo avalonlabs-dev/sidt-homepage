@@ -1,0 +1,7 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import { config, whatsappHref } from '../config';
+---
+<a class="wa-flotante" data-wa href={whatsappHref(config.whatsapp.numero, config.whatsapp.mensaje)} target="_blank" rel="noopener" aria-label="Contáctanos por WhatsApp" title="Contáctanos por WhatsApp">
+  <IconoWhatsapp />
+</a>

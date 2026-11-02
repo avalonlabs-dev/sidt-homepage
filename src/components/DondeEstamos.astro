@@ -1,0 +1,37 @@
+---
+import IconoWhatsapp from './IconoWhatsapp.astro';
+import Icono from './Icono.astro';
+import Forma from './Forma.astro';
+import Topografia from './Topografia.astro';
+import { config, whatsappHref } from '../config';
+---
+<!-- Se oculta si no hay ninguna dirección (build sin datos y API caída). -->
+<section class="donde" id="donde-estamos" aria-labelledby="donde-titulo" hidden={config.sucursales.length === 0}>
+  <div class="fondo">
+    <Topografia class="topo--tinta" />
+    <Forma tipo="destello-violeta" class="donde-destello" anima="gira" />
+    <Forma tipo="mancha-amarilla-clara" class="donde-mancha" anima="respira respira--lenta" />
+  </div>
+  <div class="contenedor">
+    <div class="encabezado">
+      <h2 class="titulo-seccion" id="donde-titulo"><b>Dónde estamos</b></h2>
+      <p class="bajada">Atendemos en persona y por WhatsApp. Elige la sede más cercana.</p>
+    </div>
+    <!-- contenido.ts clona este icono para las sedes que llegan de la API. -->
+    <span id="icono-pin" hidden><Icono nombre="map-pin" /></span>
+    <div class="donde-lista" id="donde-lista">
+      {config.sucursales.map((s) => (
+        <article class="sede">
+          <span class="sede-pin"><Icono nombre="map-pin" /></span>
+          <p class="sede-ciudad">{s.ciudad}</p>
+          <h3 class="sede-nombre">{s.nombre}</h3>
+          <p class="sede-dir">{s.direccion}{s.provincia ? `, ${s.provincia}` : ''}</p>
+          {s.telefono && <p class="sede-tel"><a href={`tel:${s.telefono.replace(/[^\d+]/g, '')}`}>{s.telefono}</a></p>}
+          <a class="btn-wa btn-wa--chico" data-wa data-wa-propio={s.whatsapp ? '' : undefined} href={whatsappHref((s.whatsapp ?? config.whatsapp).numero, (s.whatsapp ?? config.whatsapp).mensaje)} target="_blank" rel="noopener">
+            <IconoWhatsapp />Escribir por WhatsApp
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

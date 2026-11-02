@@ -1,0 +1,46 @@
+---
+import Base from '../layouts/Base.astro';
+import Cabecera from '../components/Cabecera.astro';
+import Cifras from '../components/Cifras.astro';
+import Testimonios from '../components/Testimonios.astro';
+import Pie from '../components/Pie.astro';
+import Forma from '../components/Forma.astro';
+import Icono from '../components/Icono.astro';
+import Topografia from '../components/Topografia.astro';
+import IconoWhatsapp from '../components/IconoWhatsapp.astro';
+import { config, whatsappHref } from '../config';
+import { foto } from '../config/media';
+const persona = foto('nosotros');
+---
+<Base titulo={`Gracias por contactarte | SIDT ${config.nombrePais}`} conversion indexar={false} ruta="gracias.html">
+  <Cabecera />
+  <main class="principal">
+    <section class="gracias">
+      <div class="fondo">
+        <Topografia class="topo--tinta" />
+        <Forma tipo="marca-agua-logo" class="hero-agua" eager />
+        <Forma tipo="destello-violeta" class="hero-destello-a" anima="gira" eager />
+        <Forma tipo="destello-violeta" class="hero-destello-c" anima="gira gira--inversa" eager />
+      </div>
+      <div class="contenedor gracias-rejilla">
+        <div class="gracias-cuerpo">
+          <span class="gracias-check"><Icono nombre="check-circle" /></span>
+          <h1 class="titulo-gracias">Gracias por <b>contactarte</b></h1>
+          <p class="hero-bajada">Un asesor comercial te contactará en este momento para atender a tu requerimiento.</p>
+          <a class="btn-wa" data-wa href={whatsappHref(config.whatsapp.numero, config.whatsapp.mensaje)} target="_blank" rel="noopener">
+            <IconoWhatsapp />Contactar por WhatsApp
+          </a>
+        </div>
+        <div class="gracias-figura">
+          <div class="nosotros-mancha" aria-hidden="true">
+            <Forma tipo="mancha-amarilla" class="mancha-capa" anima="respira respira--lenta" eager />
+          </div>
+          {persona && <img class="gracias-persona" src={persona.src} width={persona.width} height={persona.height} alt={persona.alt} fetchpriority="high" decoding="async" />}
+        </div>
+      </div>
+    </section>
+    <Cifras />
+    <Testimonios />
+  </main>
+  <Pie />
+</Base>

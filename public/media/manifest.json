@@ -1,0 +1,372 @@
+{
+  "ec": {
+    "testimonios": [
+      {
+        "src": "/media/testimonios/compartida/testimonio-01.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece la asesoría y cuenta que ya defendió su tesis sin novedades"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-02.webp",
+        "width": 720,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece el servicio, informa que su artículo fue aceptado en una revista y pide ayuda para una tesis doctoral"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-03.webp",
+        "width": 352,
+        "height": 747,
+        "alt": "Captura de WhatsApp en la que alguien agradece la ayuda con su tesis de maestría y el equipo le responde con felicitaciones"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-04.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece la ayuda recibida y elogia el trabajo realizado"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-05.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien cuenta que acaba de sustentar su tesis con buena calificación"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-06.webp",
+        "width": 720,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien informa que terminó su defensa muy bien y agradece el apoyo"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-07.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien cuenta que le fue bien en su defensa de tesis"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-08.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece la ayuda y cuenta que sustentó su tesis con una nota alta"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-09.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de un grupo de WhatsApp en el que estudiantes agradecen la supervisión constante y cuentan que ya se graduaron"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-10.webp",
+        "width": 738,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece muchísimo la ayuda y cuenta que todo salió muy bien en su defensa"
+      }
+    ],
+    "universidades": [
+      {
+        "src": "/media/universidades/ec/01.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de PUCE"
+      },
+      {
+        "src": "/media/universidades/ec/02.webp",
+        "width": 215,
+        "height": 86,
+        "alt": "Logo de UNEMI"
+      },
+      {
+        "src": "/media/universidades/ec/03.webp",
+        "width": 240,
+        "height": 81,
+        "alt": "Logo de Universidad Católica de Cuenca"
+      },
+      {
+        "src": "/media/universidades/ec/04.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de ESPE"
+      },
+      {
+        "src": "/media/universidades/ec/05.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de UIDE"
+      },
+      {
+        "src": "/media/universidades/ec/06.webp",
+        "width": 225,
+        "height": 60,
+        "alt": "Logo de Universidad del Azuay"
+      },
+      {
+        "src": "/media/universidades/ec/07.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Uniandes"
+      },
+      {
+        "src": "/media/universidades/ec/08.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de UDLA"
+      },
+      {
+        "src": "/media/universidades/ec/09.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Israel"
+      },
+      {
+        "src": "/media/universidades/ec/10.webp",
+        "width": 240,
+        "height": 145,
+        "alt": "Logo de UNIR"
+      },
+      {
+        "src": "/media/universidades/ec/11.webp",
+        "width": 240,
+        "height": 145,
+        "alt": "Logo de Universidad Nacional de Chimborazo"
+      },
+      {
+        "src": "/media/universidades/ec/12.webp",
+        "width": 182,
+        "height": 123,
+        "alt": "Logo de Universidad Central del Ecuador"
+      },
+      {
+        "src": "/media/universidades/ec/13.webp",
+        "width": 234,
+        "height": 70,
+        "alt": "Logo de Universidad Politécnica Salesiana"
+      },
+      {
+        "src": "/media/universidades/ec/14.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad de Guayaquil"
+      }
+    ]
+  },
+  "pe": {
+    "testimonios": [
+      {
+        "src": "/media/testimonios/compartida/testimonio-01.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece la asesoría y cuenta que ya defendió su tesis sin novedades"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-02.webp",
+        "width": 720,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece el servicio, informa que su artículo fue aceptado en una revista y pide ayuda para una tesis doctoral"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-03.webp",
+        "width": 352,
+        "height": 747,
+        "alt": "Captura de WhatsApp en la que alguien agradece la ayuda con su tesis de maestría y el equipo le responde con felicitaciones"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-04.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece la ayuda recibida y elogia el trabajo realizado"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-05.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien cuenta que acaba de sustentar su tesis con buena calificación"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-06.webp",
+        "width": 720,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien informa que terminó su defensa muy bien y agradece el apoyo"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-07.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien cuenta que le fue bien en su defensa de tesis"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-08.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece la ayuda y cuenta que sustentó su tesis con una nota alta"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-09.webp",
+        "width": 702,
+        "height": 1600,
+        "alt": "Captura de un grupo de WhatsApp en el que estudiantes agradecen la supervisión constante y cuentan que ya se graduaron"
+      },
+      {
+        "src": "/media/testimonios/compartida/testimonio-10.webp",
+        "width": 738,
+        "height": 1600,
+        "alt": "Captura de WhatsApp en la que alguien agradece muchísimo la ayuda y cuenta que todo salió muy bien en su defensa"
+      }
+    ],
+    "universidades": [
+      {
+        "src": "/media/universidades/pe/01.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Tecnológica del Perú"
+      },
+      {
+        "src": "/media/universidades/pe/02.webp",
+        "width": 240,
+        "height": 81,
+        "alt": "Logo de Universidad Nacional de San Agustín de Arequipa"
+      },
+      {
+        "src": "/media/universidades/pe/03.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad César Vallejo"
+      },
+      {
+        "src": "/media/universidades/pe/04.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Continental"
+      },
+      {
+        "src": "/media/universidades/pe/05.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Católica San Pablo"
+      },
+      {
+        "src": "/media/universidades/pe/06.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Católica de Santa María"
+      },
+      {
+        "src": "/media/universidades/pe/07.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad de San Martín de Porres"
+      },
+      {
+        "src": "/media/universidades/pe/08.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Alas Peruanas"
+      },
+      {
+        "src": "/media/universidades/pe/09.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Nacional Mayor de San Marcos"
+      },
+      {
+        "src": "/media/universidades/pe/10.webp",
+        "width": 240,
+        "height": 81,
+        "alt": "Logo de Universidad Nacional del Callao"
+      },
+      {
+        "src": "/media/universidades/pe/11.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Inca Garcilaso de la Vega"
+      },
+      {
+        "src": "/media/universidades/pe/12.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de SENATI"
+      },
+      {
+        "src": "/media/universidades/pe/13.webp",
+        "width": 225,
+        "height": 86,
+        "alt": "Logo de Universidad Nacional Federico Villarreal"
+      }
+    ]
+  },
+  "hero": {
+    "estudiante": {
+      "src": "/media/hero/student01.webp",
+      "width": 448,
+      "height": 797,
+      "alt": "Estudiante con suéter azul, lentes y mochila que señala con la mano hacia el formulario"
+    },
+    "nosotros": {
+      "src": "/media/hero/student02.webp",
+      "width": 570,
+      "height": 836,
+      "alt": "Joven sonriente con lentes y camiseta amarilla que abraza cuadernos"
+    }
+  },
+  "logo": {
+    "svg": "/media/logo.svg",
+    "webp": "/media/logo.webp",
+    "favicon": "/media/favicon.ico",
+    "width": 156,
+    "height": 204,
+    "alt": "SIDT, Servicios Integrales de Tesis"
+  },
+  "video": {
+    "src": "/media/video/about01.mp4",
+    "poster": "/media/video/poster.webp",
+    "width": 720,
+    "height": 1280,
+    "duration": 51.9,
+    "bytes": 6996396,
+    "audio": true,
+    "posterWidth": 540,
+    "posterHeight": 960,
+    "alt": "Video vertical de una asesora de SIDT que invita a estudiantes universitarios a conocer el servicio"
+  },
+  "marca": {
+    "marca-agua-logo": {
+      "src": "/media/marca/marca-agua-logo.svg",
+      "width": 101,
+      "height": 209
+    },
+    "mancha-amarilla": {
+      "src": "/media/marca/mancha-amarilla.svg",
+      "width": 505,
+      "height": 624
+    },
+    "mancha-amarilla-clara": {
+      "src": "/media/marca/mancha-amarilla-clara.svg",
+      "width": 443,
+      "height": 547
+    },
+    "destello-violeta": {
+      "src": "/media/marca/destello-violeta.svg",
+      "width": 81,
+      "height": 91
+    },
+    "circulo-amarillo-grande": {
+      "src": "/media/marca/circulo-amarillo-grande.svg",
+      "width": 124,
+      "height": 162
+    },
+    "circulo-amarillo-medio": {
+      "src": "/media/marca/circulo-amarillo-medio.svg",
+      "width": 62,
+      "height": 124
+    },
+    "topografia-lineas": {
+      "src": "/media/marca/topografia-lineas.svg",
+      "width": 640,
+      "height": 640
+    },
+    "figura-violeta-pasos": {
+      "src": "/media/marca/figura-violeta-pasos.svg",
+      "width": 595,
+      "height": 945
+    }
+  }
+}

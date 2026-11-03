@@ -10,27 +10,6 @@ if (DOMINIOS_SIDT.includes(location.hostname)) {
   });
 }
 
-/* ===== Formulario reducido en móvil (<768 px): Nombre, WhatsApp y Carrera/Universidad =====
-   A los campos ocultos hay que quitarles `required`: si no, el navegador bloquea el envío
-   intentando enfocar un campo invisible y la persona no ve ningún error. */
-const movil = window.matchMedia('(max-width: 767.98px)');
-function aplicarCamposMovil() {
-  document.querySelectorAll<HTMLElement>('.form-row-optional-mobile').forEach((fila) => {
-    fila.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input, select, textarea').forEach((campo) => {
-      if (movil.matches) {
-        if (campo.hasAttribute('required')) {
-          campo.setAttribute('data-was-required', 'true');
-          campo.removeAttribute('required');
-        }
-      } else if (campo.getAttribute('data-was-required') === 'true') {
-        campo.setAttribute('required', 'required');
-      }
-    });
-  });
-}
-aplicarCamposMovil();
-movil.addEventListener('change', aplicarCamposMovil);
-
 /* ===== WhatsApp: solo dígitos y regla por código de país ===== */
 function reglaWhatsapp(codigo: string, numero: string): string {
   // Se tolera el 0 inicial con el que se escribe en Ecuador (0963875608).

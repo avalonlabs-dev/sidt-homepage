@@ -307,9 +307,8 @@ header.cabecera { position: absolute; inset: 0 0 auto; z-index: 5; padding-block
 .ana-cuerpo { padding: 1rem; display: grid; gap: 0.8rem; justify-items: start; }
 .ana-burbuja { background: var(--lila); border-radius: 1rem 1rem 1rem 0.2rem; padding: 0.7rem 0.85rem; font-size: 0.875rem; line-height: 1.45; }
 
-/* ===== Móvil: formulario de 3 campos y sin Ana (no se mueve: lo usa formularios.ts) ===== */
+/* ===== Móvil: sin Ana ===== */
 @media (max-width: 767.98px) {
-  .form-row-optional-mobile { display: none; }
   .ana { display: none; }
   .linea, .linea-int { display: inline; }
 }

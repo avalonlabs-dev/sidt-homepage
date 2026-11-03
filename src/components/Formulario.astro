@@ -18,11 +18,6 @@ const next = `https://${config.dominio}/gracias.html`;
     <input type="text" name="name" id={id('name')} autocomplete="name" required />
   </div>
 
-  <div class="campo form-row-optional-mobile">
-    <label for={id('email')}>Correo electrónico</label>
-    <input type="email" name="email" id={id('email')} autocomplete="email" required />
-  </div>
-
   <div class="campo-doble">
     <div class="campo campo-codigo">
       <label for={id('countryCode')}>País</label>
@@ -37,15 +32,6 @@ const next = `https://${config.dominio}/gracias.html`;
     </div>
   </div>
 
-  <div class="campo">
-    <label for={id('career')}>Carrera / Universidad</label>
-    <input type="text" name="career" id={id('career')} required />
-  </div>
-
-  <div class="campo form-row-optional-mobile">
-    <label for={id('message')}>Mensaje (cuéntanos sobre tu proyecto)</label>
-    <textarea name="message" id={id('message')} rows={compacto ? 2 : 3} required></textarea>
-  </div>
 
   <input type="submit" class="btn-enviar" value="Enviar" />
 

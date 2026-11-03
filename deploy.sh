@@ -5,7 +5,8 @@
 #
 # Se puede repetir sin riesgo. Publica el build y deja nginx y HTTPS según el DNS:
 #   - asesoriasidt.com y www: obligatorios, deben apuntar a este servidor.
-#   - lsec y ls: se activan solos cuando su DNS apunta aquí. Mientras no, se omiten.
+#   - lsec y ls: cada uno se activa solo cuando su DNS apunta aquí. Mientras no, se omite.
+#     Si solo uno propagó, se activa ese; al repetir entra el otro.
 #
 # Opcional:
 #   CERTBOT_EMAIL=correo@dominio ./deploy.sh   correo para avisos de vencimiento
@@ -35,7 +36,7 @@ fi
 [ $# -eq 0 ] || fallo "Opción desconocida: $1 (usa --rollback o ninguna)"
 
 # ---------- Requisitos ----------
-for comando in git node npm nginx certbot curl getent sudo; do
+for comando in git node npm nginx certbot curl getent openssl sudo; do
   command -v "$comando" >/dev/null || fallo "Falta $comando. Instálalo y repite (certbot: sudo apt install -y certbot)."
 done
 
@@ -44,7 +45,8 @@ IP="${IP_SERVIDOR:-$(curl -fsS -m 10 https://checkip.amazonaws.com | tr -d '[:sp
 info "IP de este servidor: $IP"
 
 apunta_aqui() { getent ahostsv4 "$1" | awk '{print $1}' | grep -qx "$IP"; }
-tiene_cert()  { sudo test -s "$CERTS/$1/fullchain.pem"; }
+# Vigente por al menos 7 días: uno vencido cuenta como que no existe.
+tiene_cert()  { sudo openssl x509 -checkend 604800 -noout -in "$CERTS/$1/fullchain.pem" >/dev/null 2>&1; }
 
 for dominio in asesoriasidt.com www.asesoriasidt.com; do
   apunta_aqui "$dominio" || fallo "$dominio no apunta a $IP. Corrige el DNS y repite."
@@ -59,15 +61,17 @@ sudo chown -R "$(id -un):" "$RAIZ"
 "$REPO/deploy/desplegar.sh"
 
 # ---------- nginx ----------
-# 1: solo HTTP · 2: + HTTPS de la raíz · 3: + HTTPS de lsec y ls
+# Bloque HTTPS de un sitio dentro de la plantilla.
+seccion() {
+  awk -v m="#@@ HTTPS-$1 " 'index($0, "#@@ HTTPS-") == 1 { p = (index($0, m) == 1) } p' "$PLANTILLA"
+}
+
+# Instala la base HTTP más el HTTPS de los sitios indicados (RAIZ, LSEC, LS).
 instalar_nginx() {
-  local etapa="$1" tmp copia
+  local tmp copia sitio
   tmp="$(mktemp)"
-  case "$etapa" in
-    1) sed '/^#@@ HTTPS-/,$d' "$PLANTILLA" > "$tmp" ;;
-    2) sed '/^#@@ HTTPS-LS/,$d' "$PLANTILLA" > "$tmp" ;;
-    3) cp "$PLANTILLA" "$tmp" ;;
-  esac
+  sed '/^#@@ HTTPS-/,$d' "$PLANTILLA" > "$tmp"
+  for sitio in "$@"; do seccion "$sitio" >> "$tmp"; done
 
   copia=""
   if sudo test -f "$SITIO"; then
@@ -84,11 +88,11 @@ instalar_nginx() {
   if ! sudo nginx -t; then
     if [ -n "$copia" ]; then sudo cp "$copia" "$SITIO"; else sudo rm -f "$SITIO" "$ENLACE"; fi
     rm -f "$copia"
-    fallo "nginx rechazó la configuración (etapa $etapa). Se restauró la anterior."
+    fallo "nginx rechazó la configuración. Se restauró la anterior."
   fi
   rm -f "${copia:-/nonexistent}"
   sudo systemctl reload nginx
-  ok "nginx actualizado (etapa $etapa)"
+  ok "nginx actualizado (HTTPS: ${*:-ninguno})"
 }
 
 pedir_cert() {
@@ -104,31 +108,37 @@ pedir_cert() {
   sudo certbot "${args[@]}"
 }
 
-etapa=2
 if tiene_cert asesoriasidt.com; then
-  ok "La raíz ya tiene certificado"
+  ok "La raíz ya tiene certificado vigente"
 else
   info "Pidiendo certificado para asesoriasidt.com y www"
-  instalar_nginx 1
+  instalar_nginx
   pedir_cert asesoriasidt.com asesoriasidt.com www.asesoriasidt.com
   ok "Certificado de la raíz emitido"
 fi
 
+activos=(RAIZ)
 pendientes=()
-for dominio in lsec.asesoriasidt.com ls.asesoriasidt.com; do
+activar() {
+  local sitio="$1" dominio="$2"
   if tiene_cert "$dominio"; then
-    continue
-  elif apunta_aqui "$dominio"; then
-    info "Pidiendo certificado para $dominio"
-    # El reto llega por el puerto 80, que ya responde en cualquier etapa.
-    instalar_nginx 2
-    pedir_cert "$dominio" "$dominio"
-  else
+    activos+=("$sitio")
+  elif ! apunta_aqui "$dominio"; then
     pendientes+=("$dominio")
+  else
+    info "Pidiendo certificado para $dominio"
+    instalar_nginx "${activos[@]}"
+    if pedir_cert "$dominio" "$dominio"; then
+      activos+=("$sitio")
+    else
+      aviso "Falló el certificado de $dominio; puede que el DNS aún no propague."
+      pendientes+=("$dominio")
+    fi
   fi
-done
-[ ${#pendientes[@]} -eq 0 ] && etapa=3
-instalar_nginx "$etapa"
+}
+activar LSEC lsec.asesoriasidt.com
+activar LS ls.asesoriasidt.com
+instalar_nginx "${activos[@]}"
 
 # ---------- Comprobar ----------
 comprobar() {
@@ -142,16 +152,19 @@ comprobar https://asesoriasidt.com/ 200
 comprobar https://www.asesoriasidt.com/ 301
 comprobar https://asesoriasidt.com/robots.txt 200
 comprobar https://asesoriasidt.com/public/landing/ec 200
-if [ "$etapa" = 3 ]; then
-  comprobar https://lsec.asesoriasidt.com/ 200
-  comprobar https://ls.asesoriasidt.com/ 200
-  comprobar https://ls.asesoriasidt.com/public/landing/pe 200
-fi
+for sitio in "${activos[@]}"; do
+  case "$sitio" in
+    LSEC) comprobar https://lsec.asesoriasidt.com/ 200
+          comprobar https://lsec.asesoriasidt.com/public/landing/ec 200 ;;
+    LS)   comprobar https://ls.asesoriasidt.com/ 200
+          comprobar https://ls.asesoriasidt.com/public/landing/pe 200 ;;
+  esac
+done
 
 echo
 ok "Landing publicada en https://asesoriasidt.com"
 for dominio in ${pendientes[@]+"${pendientes[@]}"}; do
-  aviso "$dominio sigue en el hosting. Cuando su registro A apunte a $IP, repite ./deploy.sh"
+  aviso "$dominio aún no está activo aquí. Cuando su registro A apunte a $IP, repite ./deploy.sh"
 done
 echo "   Si /public/landing da error, falta desplegar la API o correr sus migraciones."
 echo "   Testimonios, una sola vez, desde la carpeta de sidt-api:"

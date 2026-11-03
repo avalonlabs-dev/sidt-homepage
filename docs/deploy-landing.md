@@ -48,6 +48,17 @@ Publica el build, configura nginx y pide los certificados según el DNS. Se pued
 - `lsec` y `ls` se activan solos cuando su DNS apunte aquí. Mientras tanto se omiten y siguen en el hosting.
 - `./deploy.sh --rollback` vuelve a la publicación anterior.
 
+Si solo uno de los dos propagó, se activa ese; al repetir `./deploy.sh` entra el otro.
+
+### Cambiar `ls` y `lsec`
+
+1. Con horas de anticipación, baja el TTL de sus registros A a 300 en el Zone Editor del cPanel.
+2. Cambia solo esos dos registros A a `3.134.183.117`. No toques los nameservers ni los registros de correo.
+3. Espera a que `dig +short ls.asesoriasidt.com` y `dig +short lsec.asesoriasidt.com` devuelvan esa IP.
+4. Corre `./deploy.sh` en el servidor. Pide los certificados y activa cada dominio.
+
+Entre el cambio de DNS y el paso 4, esos dominios pueden mostrar error de certificado: hazlo en un horario de poco tráfico.
+
 Los pasos 1 a 5 son lo mismo, a mano.
 
 ## 1. Preparar el servidor (una sola vez)

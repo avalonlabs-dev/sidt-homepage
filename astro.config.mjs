@@ -6,7 +6,7 @@ if (!['ec', 'pe'].includes(pais)) {
   throw new Error(`PAIS inválido: "${pais}". Usa ec o pe.`);
 }
 // Dominio canónico de cada build (lsec sirve el mismo dist/ec y declara la raíz como canónica).
-const dominios = { ec: 'asesoriasidt.com', pe: 'ls.asesoriasidt.com' };
+const dominios = { ec: 'lsec.asesoriasidt.com', pe: 'ls.asesoriasidt.com' };
 
 export default defineConfig({
   output: 'static',

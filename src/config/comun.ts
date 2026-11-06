@@ -15,14 +15,14 @@ export const CONVERSION_GRACIAS = 'AW-17358320939/Ka2OCL2mr_EaEKvqi9VA';
 export const FORMSUBMIT = 'https://formsubmit.co/sidtasesoria.tesis@gmail.com';
 
 /** Dominios de SIDT: el `_next` de los formularios se ajusta en el navegador a cualquiera de ellos. */
-export const DOMINIOS_SIDT = ['asesoriasidt.com', 'www.asesoriasidt.com', 'lsec.asesoriasidt.com', 'ls.asesoriasidt.com'];
+export const DOMINIOS_SIDT = ['lsec.asesoriasidt.com', 'ls.asesoriasidt.com'];
 
-/** Versiones por idioma/país (hreflang). La raíz muestra Ecuador y es la versión por defecto. */
+/** Versiones por idioma/país (hreflang). La raíz es el sitio institucional (sidt-web), no la landing. */
 export const VERSIONES = [
-  { idioma: 'es-EC', url: 'https://asesoriasidt.com/' },
+  { idioma: 'es-EC', url: 'https://lsec.asesoriasidt.com/' },
   { idioma: 'es-PE', url: 'https://ls.asesoriasidt.com/' },
 ] as const;
-export const URL_POR_DEFECTO = 'https://asesoriasidt.com/';
+export const URL_POR_DEFECTO = 'https://lsec.asesoriasidt.com/';
 
 export const NOMBRE_COMERCIAL = 'SIDT';
 export const PALABRAS_CLAVE =

@@ -4,7 +4,7 @@
 #   ./deploy.sh
 #
 # Se puede repetir sin riesgo. Publica el build y deja nginx y HTTPS según el DNS:
-#   - asesoriasidt.com y www: obligatorios, deben apuntar a este servidor.
+#   - La raíz asesoriasidt.com NO es de la landing: la sirve el sitio institucional (sidt-web).
 #   - lsec y ls: cada uno se activa solo cuando su DNS apunta aquí. Mientras no, se omite.
 #     Si solo uno propagó, se activa ese; al repetir entra el otro.
 #
@@ -48,10 +48,29 @@ apunta_aqui() { getent ahostsv4 "$1" | awk '{print $1}' | grep -qx "$IP"; }
 # Vigente por al menos 7 días: uno vencido cuenta como que no existe.
 tiene_cert()  { sudo openssl x509 -checkend 604800 -noout -in "$CERTS/$1/fullchain.pem" >/dev/null 2>&1; }
 
-for dominio in asesoriasidt.com www.asesoriasidt.com; do
-  apunta_aqui "$dominio" || fallo "$dominio no apunta a $IP. Corrige el DNS y repite."
-done
-ok "asesoriasidt.com y www apuntan aquí"
+apunta_aqui lsec.asesoriasidt.com || apunta_aqui ls.asesoriasidt.com \
+  || fallo "Ni lsec ni ls apuntan a $IP. Corrige el DNS y repite."
+
+# La raíz pasó al sitio institucional. Si esta landing todavía la sirve y sidt-web no está instalado,
+# publicar esta versión dejaría la raíz sin servicio: primero se despliega sidt-web.
+# "Sirve la raíz" = la configuración habilitada de sidt-web tiene un server HTTPS (listen 443) con
+# server_name asesoriasidt.com. Si solo tiene pe, o el enlace falta, no la sirve.
+sidt_web_sirve_raiz() {
+  sudo cat /etc/nginx/sites-enabled/sidt-web.conf 2>/dev/null | awk '
+    /^server \{/ { buf = $0 "\n"; dentro = 1; next }
+    dentro {
+      buf = buf $0 "\n"
+      if ($0 ~ /^\}/) {
+        dentro = 0
+        if (buf ~ /listen[ \t]+(\[::\]:)?443[ \t;]/ && buf ~ /server_name[^;]*[ \t]asesoriasidt\.com[ \t;]/) { ok = 1; exit }
+        buf = ""
+      }
+    }
+    END { exit !ok }'
+}
+if sudo grep -qE 'server_name[[:space:]]+asesoriasidt\.com;' "$SITIO" 2>/dev/null && ! sidt_web_sirve_raiz; then
+  fallo "La landing aún sirve asesoriasidt.com y sidt-web no sirve la raíz (falta su server HTTPS de asesoriasidt.com en sites-enabled/sidt-web.conf; ¿solo tiene pe?). Despliega primero sidt-web (./deploy.sh en su repo)."
+fi
 
 # ---------- Publicar ----------
 info "Preparando carpetas"
@@ -108,16 +127,7 @@ pedir_cert() {
   sudo certbot "${args[@]}"
 }
 
-if tiene_cert asesoriasidt.com; then
-  ok "La raíz ya tiene certificado vigente"
-else
-  info "Pidiendo certificado para asesoriasidt.com y www"
-  instalar_nginx
-  pedir_cert asesoriasidt.com asesoriasidt.com www.asesoriasidt.com
-  ok "Certificado de la raíz emitido"
-fi
-
-activos=(RAIZ)
+activos=()
 pendientes=()
 activar() {
   local sitio="$1" dominio="$2"
@@ -148,13 +158,10 @@ comprobar() {
 }
 
 info "Comprobando"
-comprobar https://asesoriasidt.com/ 200
-comprobar https://www.asesoriasidt.com/ 301
-comprobar https://asesoriasidt.com/robots.txt 200
-comprobar https://asesoriasidt.com/public/landing/ec 200
 for sitio in "${activos[@]}"; do
   case "$sitio" in
     LSEC) comprobar https://lsec.asesoriasidt.com/ 200
+          comprobar https://lsec.asesoriasidt.com/robots.txt 200
           comprobar https://lsec.asesoriasidt.com/public/landing/ec 200 ;;
     LS)   comprobar https://ls.asesoriasidt.com/ 200
           comprobar https://ls.asesoriasidt.com/public/landing/pe 200 ;;
@@ -162,7 +169,7 @@ for sitio in "${activos[@]}"; do
 done
 
 echo
-ok "Landing publicada en https://asesoriasidt.com"
+ok "Landing publicada: ${activos[*]:-ningún dominio activo}"
 for dominio in ${pendientes[@]+"${pendientes[@]}"}; do
   aviso "$dominio aún no está activo aquí. Cuando su registro A apunte a $IP, repite ./deploy.sh"
 done

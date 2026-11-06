@@ -7,7 +7,7 @@ const ec: PaisConfig = {
   titulo: 'Asesoría en tesis en Ecuador | SIDT',
   descripcion:
     'SIDT brinda asesoría en tesis, normas APA, examen complexivo y trabajos académicos a estudiantes en Ecuador. Cotiza por WhatsApp o con el formulario.',
-  dominio: 'asesoriasidt.com',
+  dominio: 'lsec.asesoriasidt.com',
   idioma: 'es-EC',
   localeOg: 'es_EC',
   nombrePais: 'Ecuador',

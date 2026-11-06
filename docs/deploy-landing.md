@@ -33,6 +33,8 @@ El navegador pide direcciones, WhatsApp y testimonios a `/public/landing/<pais>`
 
 > **Antes de cancelar el hosting hay que mover la zona DNS completa** a su nuevo proveedor, con **MX, SPF (TXT), DKIM y autodiscover/autoconfig**, además de los registros del portal y la API. Si no, caen el correo, el portal y la API. Cambiar `ls` y `lsec` no depende de esto.
 
+> **Desde el 2026-11-05 la raíz `asesoriasidt.com` es del sitio institucional (`sidt-web`).** Esta landing sirve solo `lsec` (Ecuador) y `ls` (Perú), y su canónica de Ecuador es `lsec`. Si en el servidor la landing todavía sirve la raíz, primero se despliega `sidt-web` (que hace el traspaso) y después esta landing; `./deploy.sh` se detiene si el orden se invierte. Las menciones a la raíz más abajo son históricas.
+
 ## Forma rápida: `./deploy.sh`
 
 Requisitos en el servidor: Node 22, nginx, certbot y el repo clonado. Después:

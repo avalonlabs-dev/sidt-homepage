@@ -1,10 +1,10 @@
 import type { PaisConfig } from './tipos';
 
 export const MENSAJE_WHATSAPP =
-  '¡Hola! Gracias por contactarnos a través de Google. 😊 ¿Qué tipo de trabajo deseas obtener más información y de qué carrera o especialidad es?';
+  '¡Hola! Gracias por contactarnos a través de Google. 😊 Quiero información sobre la asesoría y tutoría para mi proyecto académico. Mi carrera o especialidad es:';
 
 export const MENSAJE_WIDGET =
-  '¡Hola Ana! Vi la promo 2x1 en la web de SIDT y quiero información para mi tesis.';
+  '¡Hola Ana! Quiero información sobre la asesoría para mi tesis.';
 
 /** Medición. Se conserva igual que en producción. */
 export const GOOGLE_ADS_ID = 'AW-17358320939';

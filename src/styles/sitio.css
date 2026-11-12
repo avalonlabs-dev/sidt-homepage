@@ -108,8 +108,17 @@ header.cabecera { position: absolute; inset: 0 0 auto; z-index: 5; padding-block
 .franja-circulo-a { width: 3.5rem; left: 0; top: -1.75rem; }
 .franja-circulo-b { width: 3rem; right: 0; top: 75%; }
 
+/* ===== Nuestro enfoque (descargo visible bajo el hero) ===== */
+.enfoque { background: var(--lila); padding-block: clamp(1.75rem, 4vw, 2.75rem); }
+.enfoque-caja { display: flex; align-items: flex-start; gap: clamp(0.9rem, 2.5vw, 1.5rem); max-width: 62rem; padding-left: clamp(0.9rem, 2.5vw, 1.5rem); border-left: 4px solid var(--amarillo); }
+.enfoque-icono { flex: none; display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 50%; background: var(--tinta); color: var(--amarillo); font-size: 1.6rem; }
+.enfoque-texto { margin: 0; font-size: clamp(1rem, 1.6vw, 1.0625rem); line-height: 1.65; color: var(--grafito); }
+.enfoque-texto strong { color: var(--tinta); font-weight: 800; }
+@media (max-width: 479.98px) { .enfoque-icono { display: none; } }
+
 /* ===== Universidades ===== */
 .universidades { background: linear-gradient(90deg, var(--lila), var(--blanco) 30%, var(--blanco) 70%, var(--lila)); padding-block: 1.75rem; }
+.universidades-aviso { margin-top: 1rem; text-align: center; font-size: var(--t-peq); color: var(--grafito-suave); }
 .tira-marco { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent); }
 .tira { display: flex; width: max-content; animation: tira 42s linear infinite; }
 .tira-marco:hover .tira, .tira-marco:focus-visible .tira { animation-play-state: paused; }

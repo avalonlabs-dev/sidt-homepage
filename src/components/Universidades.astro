@@ -1,6 +1,7 @@
 ---
 import { config } from '../config';
 import { logoUniversidad } from '../config/media';
+import { avisoUniversidades } from '../data/contenido';
 const lista = config.universidades.map((u) => ({ ...u, img: logoUniversidad(u.nombre) }));
 ---
 <section class="universidades" aria-label="Universidades de nuestros estudiantes">
@@ -20,4 +21,5 @@ const lista = config.universidades.map((u) => ({ ...u, img: logoUniversidad(u.no
       ))}
     </div>
   </div>
+  <p class="contenedor universidades-aviso">{avisoUniversidades}</p>
 </section>

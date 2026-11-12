@@ -30,9 +30,24 @@ const existe = (m?: Medio | null): m is Medio =>
 
 const lista = (v: unknown): Medio[] => (Array.isArray(v) ? (v as Medio[]).filter(existe) : []);
 
+/**
+ * Capturas con frases pixeladas por la política de Google Ads (2026-11-12): el texto alternativo no debe
+ * repetir lo que se censuró. Se corrige aquí porque el manifest lo escribe otro proceso.
+ */
+const CENSURADAS = ['testimonio-02', 'testimonio-03', 'testimonio-04', 'testimonio-09'];
+const ALT_CENSURADO: Record<string, string> = {
+  'testimonio-02': 'Captura de WhatsApp en la que alguien agradece el servicio y cuenta que está a la espera de su defensa',
+  'testimonio-04': 'Captura de WhatsApp en la que alguien agradece la ayuda recibida y el equipo responde que fue un gusto apoyarle',
+};
+
 /** Capturas de testimonios del build para el país. */
 export function testimoniosBuild(): Medio[] {
-  return lista(manifest?.[config.pais]?.testimonios);
+  return lista(manifest?.[config.pais]?.testimonios).map((m) => {
+    const censurada = CENSURADAS.find((n) => m.src.includes(`/${n}.`));
+    if (!censurada) return m;
+    // ?v=2: nginx cachea /media 30 días y el archivo conserva su nombre.
+    return { ...m, src: `${m.src}?v=2`, alt: ALT_CENSURADO[censurada] ?? m.alt };
+  });
 }
 
 /** Logo de universidad por nombre (alt "Logo de <nombre>"); null si no está. */

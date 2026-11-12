@@ -10,7 +10,7 @@ export const pasos = [
   { titulo: 'Asesor Dedicado', texto: 'Un asesor experto se comunicará contigo para brindarte información personalizada.' },
   { titulo: 'Contrato Formal', texto: 'Firmarás un contrato que garantiza transparencia y compromiso mutuo.' },
   { titulo: 'Reuniones Periódicas', texto: 'Actualizaciones constantes y reuniones programadas durante todo el proceso.' },
-  { titulo: 'Entrega Final', texto: 'Recibirás el informe final de asesoría y reporte de originalidad.' },
+  { titulo: 'Cierre de asesoría', texto: 'Recibes el resumen de tus sesiones, las observaciones finales sobre tu trabajo y recomendaciones para tu sustentación.' },
 ];
 
 export const beneficios = [
@@ -24,3 +24,11 @@ export const beneficios = [
 
 export const disclaimer =
   'SIDT ofrece servicios de asesoría, consultoría y corrección de estilo para trabajos de investigación. No redactamos trabajos académicos completos ni fomentamos el plagio o la deshonestidad académica. El alumno es el único responsable de la autoría y defensa de su investigación.';
+
+/** Sección «Nuestro enfoque», bajo el hero (pedido de Google Ads, 2026-11-09). Texto exacto: no reescribir. */
+export const enfoque =
+  'SIDT brinda tutoría, asesoría metodológica y corrección de estilo. No redactamos tesis, ensayos ni trabajos académicos por el estudiante, no vendemos trabajos elaborados y no fomentamos el plagio ni la deshonestidad académica. Cada estudiante es el autor y responsable de su investigación y de su defensa.';
+
+/** Aviso bajo la franja de universidades. Texto exacto. */
+export const avisoUniversidades =
+  'Nuestros estudiantes provienen de diversas universidades. SIDT no mantiene convenios ni avales con estas instituciones.';

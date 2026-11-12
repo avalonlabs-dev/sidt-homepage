@@ -7,7 +7,7 @@ import { config, whatsappHref } from '../config';
 import { categoriasServicio, detalleServicio, serviceOptions } from '../data/servicios';
 
 const categorias = categoriasServicio.map((c) => {
-  const sufijo = `Quiero cotizar: ${c.nombre}.`;
+  const sufijo = `Quiero información sobre la asesoría de: ${c.nombre}.`;
   return { ...c, servicios: serviceOptions[c.clave], sufijo, href: whatsappHref(config.whatsapp.numero, `${config.whatsapp.mensaje} ${sufijo}`) };
 });
 ---

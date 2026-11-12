@@ -6,7 +6,7 @@ const pe: PaisConfig = {
   razonSocial: 'Tesis S.A.C',
   titulo: 'Asesoría en tesis en Perú | SIDT',
   descripcion:
-    'SIDT brinda asesoría en tesis, normas APA y trabajos académicos a estudiantes en Perú. Cotiza por WhatsApp o con el formulario.',
+    'SIDT brinda tutoría y asesoría metodológica en tesis y corrección de estilo APA a estudiantes en Perú. Cotiza por WhatsApp o con el formulario.',
   dominio: 'ls.asesoriasidt.com',
   idioma: 'es-PE',
   localeOg: 'es_PE',

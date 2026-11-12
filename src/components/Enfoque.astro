@@ -1,0 +1,14 @@
+---
+// «Nuestro enfoque»: el descargo visible arriba, bajo el hero (pedido de Google Ads, 2026-11-09).
+// El texto es exacto y coincide con el disclaimer del pie; no reescribirlo.
+import Icono from './Icono.astro';
+import Topografia from './Topografia.astro';
+import { enfoque } from '../data/contenido';
+---
+<section class="enfoque" id="enfoque" aria-labelledby="enfoque-titulo">
+  <div class="fondo"><Topografia class="topo--tinta" /></div>
+  <div class="contenedor enfoque-caja" data-revela>
+    <span class="enfoque-icono"><Icono nombre="chalkboard-teacher" /></span>
+    <p class="enfoque-texto"><strong id="enfoque-titulo">Nuestro enfoque:</strong> {enfoque}</p>
+  </div>
+</section>

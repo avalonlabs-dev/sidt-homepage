@@ -51,7 +51,7 @@ export interface PaisConfig {
   paisSeleccionado: { codigo: string; etiqueta: string };
   placeholderWhatsapp: string;
   whatsapp: Whatsapp;
-  /** Mensaje del widget de "Ana" (promo 2x1). */
+  /** Mensaje del widget de "Ana". Sin promociones atadas a la tesis (Google Ads). */
   mensajeWidget: string;
   universidades: Universidad[];
   /** Direcciones por defecto del build. Vacío = la sección se oculta hasta que la API las entregue. */

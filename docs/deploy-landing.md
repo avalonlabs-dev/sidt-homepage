@@ -177,6 +177,14 @@ ls -l /var/www/sidt-landing/current            # cuál está activa
 - Textos, diseño o código: se publica con `desplegar.sh`. Datos por defecto de cada país (razón social, número, mensaje, universidades, título y descripción): `src/config/ec.ts` y `src/config/pe.ts`.
 - El video (`media/video/about01.mp4`, unos 7 MB) solo se descarga cuando alguien pulsa "Ver video".
 
+## Antispam (Turnstile)
+
+Los formularios ya no usan FormSubmit: envían JSON a `POST /public/web/<ec|pe>/solicitudes` (mismo origen) y la API verifica el token de Cloudflare Turnstile.
+
+- **Variable de build:** `PUBLIC_TURNSTILE_SITE_KEY` (clave pública del sitio; ver `.env.example`). Va en el entorno o en un `.env` del repo en el servidor. `deploy/desplegar.sh` se detiene si falta; `--sin-turnstile` permite compilar sin widget (el formulario enviaría sin token). El secreto (`TURNSTILE_SECRET_KEY`) va solo en el `.env` de `sidt-api`.
+- **Dominios en Cloudflare:** agrega `lsec.asesoriasidt.com` y `ls.asesoriasidt.com` al widget.
+- **nginx:** `deploy/nginx-sidt-landing-comun.conf` trae la ruta nueva (`location ~ ^/public/web/(ec|pe)/solicitudes/?$`, solo POST). Hay que copiarlo al snippet y recargar: `sudo cp deploy/nginx-sidt-landing-comun.conf /etc/nginx/snippets/sidt-landing-comun.conf && sudo nginx -t && sudo systemctl reload nginx` (`./deploy.sh` ya lo copia). Publica `sidt-api` con la verificación antes que la landing.
+
 ## Retirar un testimonio con urgencia
 
 Ocultarlo o borrarlo en el portal no lo saca de inmediato: la imagen queda en caché hasta 24 horas en el navegador y en nginx. Además de borrarlo, limpia la caché de nginx:

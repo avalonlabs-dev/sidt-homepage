@@ -12,9 +12,10 @@ export const GTM_ID = 'GTM-58XGL24S';
 export const GA_ID = 'G-Z7C0M4QVTV'; // comentado a propósito, como hoy
 export const CONVERSION_GRACIAS = 'AW-17358320939/Ka2OCL2mr_EaEKvqi9VA';
 
-export const FORMSUBMIT = 'https://formsubmit.co/sidtasesoria.tesis@gmail.com';
+/** Clave pública de Cloudflare Turnstile (del build). Vacía: sin widget ni script y el envío va sin token (desarrollo). */
+export const TURNSTILE_SITE_KEY: string = (import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '').trim();
 
-/** Dominios de SIDT: el `_next` de los formularios se ajusta en el navegador a cualquiera de ellos. */
+/** Dominios de SIDT: dominios propios de la landing (el formulario envía al mismo origen). */
 export const DOMINIOS_SIDT = ['lsec.asesoriasidt.com', 'ls.asesoriasidt.com'];
 
 /** Versiones por idioma/país (hreflang). La raíz es el sitio institucional (sidt-web), no la landing. */

@@ -1,5 +1,5 @@
 ---
-import { config, FORMSUBMIT, PAISES_FORMULARIO } from '../config';
+import { config, whatsappHref, PAISES_FORMULARIO, TURNSTILE_SITE_KEY } from '../config';
 
 interface Props { sufijo?: string; compacto?: boolean }
 const { sufijo = '', compacto = false } = Astro.props;
@@ -8,9 +8,9 @@ const sel = config.paisSeleccionado;
 // País por defecto primero y marcado; el resto de la lista sin repetirlo.
 const otros = PAISES_FORMULARIO.filter((p) => !(p.codigo === sel.codigo && p.etiqueta === sel.etiqueta));
 const bandera = PAISES_FORMULARIO.find((p) => p.etiqueta === sel.etiqueta)?.bandera ?? (sel.etiqueta === 'Perú' ? '🇵🇪' : '');
-const next = `https://${config.dominio}/gracias.html`;
+const waHref = whatsappHref(config.whatsapp.numero, config.whatsapp.mensaje);
 ---
-<form class:list={['formulario', { 'formulario--compacto': compacto }]} action={FORMSUBMIT} method="POST" data-pais={config.pais} data-codigo-defecto={sel.codigo}>
+<form class:list={['formulario', { 'formulario--compacto': compacto }]} method="post" data-pais={config.pais} data-codigo-defecto={sel.codigo}>
   <h2 class="formulario-titulo"><b>Cotizaciones</b> y Consultas</h2>
 
   <div class="campo">
@@ -32,11 +32,14 @@ const next = `https://${config.dominio}/gracias.html`;
     </div>
   </div>
 
+  {TURNSTILE_SITE_KEY && <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-language="es" data-action="landing"></div>}
 
   <input type="submit" class="btn-enviar" value="Enviar" />
 
-  <input type="hidden" name="_captcha" value="false" />
-  <input type="hidden" name="_next" value={next} />
-  <!-- Honeypot anti-spam: invisible para personas; FormSubmit descarta el envío si viene relleno -->
+  <p class="formulario-estado" role="status" aria-live="polite" data-estado></p>
+  <a class="formulario-wa" data-wa href={waHref} target="_blank" rel="noopener" hidden>Escríbenos por WhatsApp</a>
+  <noscript><p class="formulario-estado">Para enviar el formulario activa JavaScript o <a data-wa href={waHref} target="_blank" rel="noopener">escríbenos por WhatsApp</a>.</p></noscript>
+
+  <!-- Honeypot anti-spam: invisible para personas; la API descarta el envío si viene relleno -->
   <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
 </form>

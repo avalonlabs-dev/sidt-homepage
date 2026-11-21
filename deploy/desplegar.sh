@@ -4,6 +4,7 @@
 #   deploy/desplegar.sh                publica: pull, build, release nueva y enlace `current`
 #   deploy/desplegar.sh --solo-build   hace pull, npm ci y build, y se detiene (no publica)
 #   deploy/desplegar.sh --rollback     vuelve a la release anterior
+#   --sin-turnstile                    (con cualquiera de los modos de build) permite compilar sin PUBLIC_TURNSTILE_SITE_KEY
 #
 # Estructura en el servidor:
 #   /var/www/sidt-landing/releases/<fecha>/{ec,pe}    cada publicación (se conservan 3)
@@ -33,13 +34,16 @@ ok()   { printf '\033[1;32m OK\033[0m %s\n' "$*"; }
 fallo() { printf '\033[1;31mERROR:\033[0m %s\n' "$*" >&2; exit 1; }
 
 MODO=publicar
-case "${1:-}" in
-  "") ;;
-  --solo-build) MODO=build ;;
-  --rollback) MODO=rollback ;;
-  -h|--help) sed -n '2,13p' "${BASH_SOURCE[0]}"; exit 0 ;;
-  *) fallo "Opción desconocida: $1 (usa --solo-build, --rollback o ninguna)" ;;
-esac
+SIN_TURNSTILE=0
+for arg in "$@"; do
+  case "$arg" in
+    --solo-build) MODO=build ;;
+    --rollback) MODO=rollback ;;
+    --sin-turnstile) SIN_TURNSTILE=1 ;;
+    -h|--help) sed -n '2,14p' "${BASH_SOURCE[0]}"; exit 0 ;;
+    *) fallo "Opción desconocida: $arg (usa --solo-build, --rollback, --sin-turnstile o ninguna)" ;;
+  esac
+done
 
 # Apunta `current` a una release de forma atómica (enlace temporal + mv -T).
 apuntar() {
@@ -88,6 +92,19 @@ if [ "${OMITIR_PULL:-0}" = 1 ]; then
 else
   info "Actualizando el código (git pull --ff-only)"
   git pull --ff-only || fallo "git pull --ff-only falló: hay cambios locales o la rama divergió. No se publicó nada."
+fi
+
+# Turnstile: sin la clave pública el build no lleva widget y el formulario enviaría sin verificación.
+# La toma de la variable de entorno o del .env del repo (lo que lee Astro).
+if [ "$SIN_TURNSTILE" != 1 ]; then
+  clave="${PUBLIC_TURNSTILE_SITE_KEY:-}"
+  if [ -z "$clave" ] && [ -f .env ]; then
+    clave="$(grep -E '^PUBLIC_TURNSTILE_SITE_KEY=' .env | tail -n 1 | cut -d= -f2- | tr -d "\"' \r" || true)"
+  fi
+  [ -n "$clave" ] || fallo "Falta PUBLIC_TURNSTILE_SITE_KEY (variable de entorno o .env del repo). Sin ella el build no lleva widget antispam. Defínela o usa --sin-turnstile. No se publicó nada."
+  ok "PUBLIC_TURNSTILE_SITE_KEY definida"
+else
+  info "--sin-turnstile: se compila sin widget antispam"
 fi
 
 info "Instalando dependencias (npm ci)"

@@ -1,15 +1,5 @@
 import { serviceOptions } from '../data/servicios';
-
-/* ===== Turnstile: el script se carga una sola vez, solo si el build trae clave (hay widgets) ===== */
-type Turnstile = { reset: (el?: Element | string) => void };
-const turnstile = () => (window as unknown as { turnstile?: Turnstile }).turnstile;
-if (document.querySelector('.cf-turnstile')) {
-  const t = document.createElement('script');
-  t.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
-  t.async = true;
-  t.defer = true;
-  document.head.appendChild(t);
-}
+import { turnstilePerezoso } from './turnstile';
 
 /* ===== Envío a la API (mismo origen; nginx lo reenvía) ===== */
 const MSG_VERIFICACION = 'No pudimos verificar que eres una persona. Vuelve a intentarlo o escríbenos por WhatsApp.';
@@ -32,6 +22,7 @@ document.querySelectorAll<HTMLFormElement>('form.formulario').forEach((form) => 
   const boton = form.querySelector<HTMLInputElement>('.btn-enviar');
   const pais = form.dataset.pais;
   if (!estado || !boton || !pais) return;
+  const turnstile = turnstilePerezoso(form);
 
   const mostrar = (texto: string, conWhatsapp: boolean) => {
     estado.textContent = texto;
@@ -42,7 +33,6 @@ document.querySelectorAll<HTMLFormElement>('form.formulario').forEach((form) => 
     e.preventDefault();
     if (boton.disabled) return;
     const campo = (n: string) => form.querySelector<HTMLInputElement | HTMLSelectElement>(`[name="${n}"]`)?.value ?? '';
-    const token = form.querySelector<HTMLInputElement>('input[name="cf-turnstile-response"]')?.value ?? '';
     const cuerpo: Record<string, unknown> = {
       nombre: campo('name').trim(),
       codigoPais: campo('countryCode'),
@@ -51,14 +41,12 @@ document.querySelectorAll<HTMLFormElement>('form.formulario').forEach((form) => 
       utm: utmDeLaUrl(),
       _honey: campo('_honey'),
     };
-    if (token) cuerpo.turnstileToken = token;
 
     boton.disabled = true;
     mostrar('Enviando…', false);
-    const reiniciar = () => {
-      const w = form.querySelector('.cf-turnstile');
-      if (w) turnstile()?.reset(w);
-    };
+    const token = await turnstile.token(); // el widget se activa al primer contacto; si aún no hay token, se espera
+    if (token) cuerpo.turnstileToken = token;
+    const reiniciar = () => turnstile.reiniciar();
     try {
       const r = await fetch(`/public/web/${pais}/solicitudes`, {
         method: 'POST',
